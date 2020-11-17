@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+
+	<form class="wizerdform" method="POST">
+
+		<fieldset class="wizerdform-page">
+			<label for="input_1">Input 1</label>
+			<input type="text" name="input_1" value="" />
+		</fieldset>
+
+		<fieldset class="wizerdform-page">
+			<label for="input_2">Input 2</label>
+			<input type="text" name="input_2" value="" />
+		</fieldset>
+
+		<fieldset class="wizerdform-page">
+			<label for="input_3">Input 3</label>
+			<input type="text" name="input_3" value="" />
+		</fieldset>
+
+	</form>
+	
+	<script src="../dist/test.bundle.js"></script>
+	<script>
+		const myform = document.querySelector('.wizerdform');
+		const wizardForm = new WizerdForm( myform );
+		wizardForm.init();
+	</script>
+</body>
+</html>
