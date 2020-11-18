@@ -130,7 +130,7 @@ export class WizerdForm {
 		this.curIndex += value;
 
 		const eventNavigate = new Event(
-			'navigateWizerdForm', 
+			'navigateWizerdForm',
 			{
 				bubbles: true
 			}
@@ -138,7 +138,7 @@ export class WizerdForm {
 		this.form.dispatchEvent( eventNavigate );
 
 		if (this.curIndex >= this.pages.length) {
-			this.form.submit();
+			this.form.dispatchEvent( new Event('submit') );
 			return false;
 		}
 
