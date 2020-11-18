@@ -8,7 +8,7 @@ module.exports = [
 	{
 		mode: 'production',
 		entry: {
-			test: './core/index.js',
+			wizerdform: './core/index.js',
 		},
 		optimization: {
 			minimize: true,
