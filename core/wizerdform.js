@@ -107,7 +107,11 @@ export class WizerdForm {
 		this.pages[pageIndex].classList.remove( this.options.page_hidden_class );
 		this.pages[pageIndex].classList.add( this.options.page_active_class );
 
-		this.prevButton.classList[pageIndex !== 0 ? 'remove' : 'add']('wizerdform-button-hidden');
+		if ( pageIndex !== 0 ) {
+			this.prevButton.classList.remove('wizerdform-button-hidden');
+		} else {
+			this.prevButton.classList.add('wizerdform-button-hidden');
+		}
 
 		this.updateProgressBar(pageIndex);
 	}
