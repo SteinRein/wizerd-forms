@@ -167,7 +167,6 @@ export class WizerdForm {
 
 	/**
 	 * Primitive Validation
-	 * This function only checks if required form fields have any value
 	 * 
 	 * For browsers above IE9 use the HTMLInputElement's API checkValidity function
 	 * prior check if required form fields have any value
