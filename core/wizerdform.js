@@ -138,8 +138,13 @@ export class WizerdForm {
 		this.form.dispatchEvent( eventNavigate );
 
 		if (this.curIndex >= this.pages.length) {
-			this.form.dispatchEvent( new Event('submit') );
-			return false;
+			this.curIndex = this.pages.length - 1;
+			this.nextButton.type = 'submit';
+			if ( this.options.submit_text ) {
+				this.nextButton.innerText = this.options.submit_text;
+			}			
+		} else {
+			this.nextButton.type = 'button';
 		}
 
 		this.goToPage(this.curIndex);
