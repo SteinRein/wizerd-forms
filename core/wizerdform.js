@@ -152,7 +152,7 @@ export class WizerdForm {
 
 	setValues(additionalValues = {}) {
 
-		for( key in additionalValues ) {
+		for( const key in additionalValues ) {
 			this.values[key] = additionalValues[key];
 		}
 
