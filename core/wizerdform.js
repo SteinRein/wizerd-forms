@@ -194,7 +194,6 @@ export class WizerdForm {
 		} else {
 
 			const curPageMandatoryFields = [...this.pages[this.curIndex].querySelectorAll('[required]')];
-		let valid = true;
 
 			curPageMandatoryFields.forEach( ( field ) => {
 				if (field.value === null || field.value.trim() === '') {
@@ -220,7 +219,7 @@ export class WizerdForm {
 	}
 
 	updateProgressBar(pageIndex = 0) {
-		this.progressBar.style.width = pageIndex * 100 / this.pages.length + '%';
+		this.progressBar.style.width = (pageIndex + 1) * 100 / this.pages.length + '%';
 	}
 
 	__delegateEvents(action = 'add') {
