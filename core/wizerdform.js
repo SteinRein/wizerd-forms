@@ -164,18 +164,47 @@ export class WizerdForm {
 	 * Primitive Validation
 	 * This function only checks if required form fields have any value
 	 * 
+	 * For browsers above IE9 use the HTMLInputElement's API checkValidity function
+	 * prior check if required form fields have any value
+	 * 
 	 * @return {boolean} validation status
 	 */
 	validate() {
-		const curPageMandatoryFields = [...this.pages[this.curIndex].querySelectorAll('[required]')];
+
 		let valid = true;
 
-		curPageMandatoryFields.forEach( ( field ) => {
-			if (field.value === null || field.value.trim() === '') {
-				field.classList.add('has-error');
-				valid = false;
+		const eventValidationFailed = new Event(
+			'wizerdForm_validationFailed',
+			{
+				bubbles: true
 			}
-		} );
+		);
+
+		if ( HTMLInputElement.prototype.checkValidity ) {
+			
+			const curPageFields = [...this.pages[this.curIndex].elements];
+			curPageFields.forEach( ( field ) => {
+				if ( ! field.checkValidity() ) {
+					field.classList.add('has-error');
+					field.dispatchEvent( eventValidationFailed );
+					valid = false;
+				}
+			} ); 
+
+		} else {
+
+			const curPageMandatoryFields = [...this.pages[this.curIndex].querySelectorAll('[required]')];
+		let valid = true;
+
+			curPageMandatoryFields.forEach( ( field ) => {
+				if (field.value === null || field.value.trim() === '') {
+					field.classList.add('has-error');
+					field.dispatchEvent( eventValidationFailed );
+					valid = false;
+				}
+			} );
+
+		}
 
 		return valid;
 
