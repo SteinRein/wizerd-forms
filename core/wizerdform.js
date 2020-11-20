@@ -318,6 +318,9 @@ export class WizerdForm {
 			case 'input':
 				this.__handle_inputChange( fn );
 				break;
+			case 'error':
+				this.__handle_validation_error( fn );
+				break;
 			case 'navigate':
 				this.__handle_navigate( fn );
 				break;
@@ -333,6 +336,15 @@ export class WizerdForm {
 				_wizerdForm: this,
 				el: formField,
 				value: formField.value,
+			} ) );
+		} );
+	}
+
+	__handle_validation_error( fn ) {
+		Array.prototype.forEach.call( this.formFields, ( formField ) => {
+			formField.addEventListener( 'wizerdForm_validationFailed', fn.bind( this, {
+				_wizerdForm: this,
+				el: formField,
 			} ) );
 		} );
 	}
