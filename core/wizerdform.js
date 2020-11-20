@@ -134,7 +134,7 @@ export class WizerdForm {
 		this.curIndex += value;
 
 		const eventNavigate = new Event(
-			'wizerdFrom_navigate',
+			'wizerdForm_navigate',
 			{
 				bubbles: true
 			}
@@ -358,7 +358,7 @@ export class WizerdForm {
 	}
 
 	__handle_navigate( fn ) {
-		this.form.addEventListener( 'wizerdFrom_navigate', fn.bind( this, {
+		this.form.addEventListener( 'wizerdForm_navigate', fn.bind( this, {
 			_wizerdForm: this,
 			page: this.curIndex
 		} ) );
