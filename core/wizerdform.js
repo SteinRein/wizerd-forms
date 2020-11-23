@@ -59,7 +59,9 @@ export class WizerdForm {
 	}
 
 	/**
-	 * Initialize wɪzə(r)d Form
+	 * Initialize the current wɪzə(r)d Form Instance.
+	 * This Method will add navigation controls, move the form
+	 * to it's startIndex and add all Event listeners.
 	 */
 	init() {
 		this.__addControls();
@@ -68,12 +70,14 @@ export class WizerdForm {
 	}
 
 	/**
-	 * Destroy wɪzə(r)d Form
+	 * Destroy the current wɪzə(r)d Form Instance.
+	 * This Method will remove navigation controls, set the active
+	 * pageIndex to 0 and remove all Event listeners.
 	 */
 	destroy() {
 		this.__removeControls();
 		this.goToPage(0);
-		this.__delegateEvents('remove');
+		this.__delegateEvents(false);
 	}
 
 	/**
@@ -91,7 +95,8 @@ export class WizerdForm {
 	}
 
 	/**
-	 * Set active page index
+	 * Change the current page
+	 * 
 	 * @param {number} pageIndex 
 	 * 
 	 * @return {void}
@@ -127,6 +132,7 @@ export class WizerdForm {
 
 	/**
 	 * Navigate the form
+	 * 
 	 * @param {number} value amount of pages to move. Use negative numbers to move to previous pages.
 	 * 
 	 * @return {void|false} returns false on the last page
@@ -161,6 +167,14 @@ export class WizerdForm {
 		this.goToPage(this.curIndex);
 	}
 
+	/**
+	 * Set form values. setValues will check all formfields and save their
+	 * values to it's instance values variable.
+	 * 
+	 * Use the additionalValues param to add your own form values.
+	 * 
+	 * @param {object} additionalValues
+	 */
 	setValues(additionalValues = {}) {
 
 		for( const key in additionalValues ) {
@@ -181,6 +195,8 @@ export class WizerdForm {
 	 * 
 	 * For browsers above IE9 use the HTMLInputElement's API checkValidity function
 	 * prior check if required form fields have any value
+	 * 
+	 * pattern validations won't work prior IE9
 	 * 
 	 * @return {boolean} validation status
 	 */
@@ -225,7 +241,7 @@ export class WizerdForm {
 	}
 
 	/**
-	 * Remove classes added by validation
+	 * Remove error classes added by validation
 	 * 
 	 * @return {void}
 	 */
@@ -233,13 +249,25 @@ export class WizerdForm {
 		e.target.classList.remove('has-error');
 	}
 
+	/**
+	 * Update progressbar width according to the current page
+	 * 
+	 * @param {number} pageIndex 
+	 * 
+	 * @return {void}
+	 */
 	updateProgressBar(pageIndex = 0) {
 		this.progressBar.style.width = (pageIndex + 1) * 100 / this.pages.length + '%';
 	}
 
-	__delegateEvents(action = 'add') {
+	/**
+	 * delegate events
+	 * 
+	 * @param {boolean} add add or remove event listeners 
+	 */
+	__delegateEvents(add = true) {
 		Array.prototype.forEach.call( this.formFields, ( formField ) => {
-			if ( action !== 'remove' ) {
+			if ( add ) {
 				// Clear Errors
 				formField.addEventListener( 'keyup', this.clearErrors.bind(this) );
 				formField.addEventListener( 'change', this.clearErrors.bind(this) );
@@ -256,7 +284,7 @@ export class WizerdForm {
 			}
 		} );
 
-		if ( action !== 'remove' ) {
+		if ( add ) {
 			this.prevButton.addEventListener( 'click', this.navigateForm.bind(this, -1) );
 			this.nextButton.addEventListener( 'click', this.navigateForm.bind(this, 1) );
 		} else {
@@ -323,6 +351,15 @@ export class WizerdForm {
 	}
 
 	/**
+	 * Custom Callback functions.
+	 * 
+	 * available callbacks:
+	 * 
+	 * input: fires whenever an input changes
+	 * 
+	 * error: fires when validation fails
+	 * 
+	 * navigate: fires on navigation
 	 * 
 	 * @param {string} on 
 	 * @param {CallableFunction} fn 

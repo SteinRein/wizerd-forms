@@ -73,11 +73,12 @@ fieldset.wizerdform-page > legend{
 			data.el.reportValidity();
 		});
 
-		myWizerdForm.on('wizerdForm_navigate', () => {
+		wizerdForm.on('navigate', (e) => {
 			const messages = myWizerdForm.parentElement.querySelectorAll('.msg');
 			messages.forEach( (msg) => {
 				msg.parentElement.removeChild(msg);
 			} );
+			console.log(e);
 		});
 
 		myWizerdForm.addEventListener('submit', (e) => {
