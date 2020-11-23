@@ -12,10 +12,11 @@ export class WizerdForm {
 	 * @param {number} startIndex 
 	 * @param {object} options 
 	 */
-	constructor( form, startIndex = 0, options =  {} ) {
+	constructor( form, options =  {} ) {
 
 		// Setup wɪzə(r)d Form options
     const defaults = {
+			startIndex: 0,
 			pages: '.wizerdform-page',
 			exclude_form_fieldtypes: [
 				'fieldset', 
