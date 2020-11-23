@@ -4,33 +4,90 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+
+	<style>
+
+.wizerdform {
+	padding: 40px 50px;
+	background-color: #ffffff;
+	box-shadow: 0 5px 25px -5px rgba(0, 0, 0, 0.1);
+}
+.wizerdform-page {
+	display: none;
+}
+.wizerdform-page.wizerdform-active-page {
+	display: block;
+}
+fieldset.wizerdform-page > legend{
+	margin:  0;
+	padding: 0;
+	font-size: 0;
+	border: none;
+	visibility: hidden;
+}
+.wizerdform-button-hidden {
+	display: none;
+}
+.wizerdform-progress {
+	margin-top: 1rem;
+	width: 0;
+	height: 2px;
+	background-color: #000;
+	transition: width 0.2s ease;
+}
+
+	</style>
+
 </head>
 <body>
 
-	<form class="wizerdform" method="POST">
+	<form class="wizerdform" method="POST" action="example.html">
 
 		<fieldset class="wizerdform-page">
-			<label for="input_1">Input 1</label>
-			<input type="text" name="input_1" value="" />
+			<label for="input_1">this field is required</label>
+			<input type="text" name="input_1" value="" required />
 		</fieldset>
 
 		<fieldset class="wizerdform-page">
-			<label for="input_2">Input 2</label>
-			<input type="text" name="input_2" value="" />
+			<label for="input_2">write test to continue</label>
+			<input type="text" name="input_2" required pattern="test" value="" />
 		</fieldset>
 
 		<fieldset class="wizerdform-page">
-			<label for="input_3">Input 3</label>
+			<label for="input_3">YAIE (yet another input element)</label>
 			<input type="text" name="input_3" value="" />
 		</fieldset>
 
 	</form>
 	
-	<script src="../dist/test.bundle.js"></script>
+	<script src="../dist/wizerdform.bundle.js"></script>
 	<script>
-		const myform = document.querySelector('.wizerdform');
-		const wizardForm = new WizerdForm( myform );
-		wizardForm.init();
+		const myWizerdForm = document.querySelector('.wizerdform');
+		const wizerdForm = new WizerdForm( myWizerdForm, {
+			submit_text: 'Submit!!!'
+		} );
+		wizerdForm.init();
+
+		wizerdForm.on('error', (data, e) => {
+			console.log(e);
+			data.el.reportValidity();
+		});
+
+		myWizerdForm.on('wizerdForm_navigate', () => {
+			const messages = myWizerdForm.parentElement.querySelectorAll('.msg');
+			messages.forEach( (msg) => {
+				msg.parentElement.removeChild(msg);
+			} );
+		});
+
+		myWizerdForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const submitMsg = document.createElement('div');
+			submitMsg.className = 'msg success';
+			submitMsg.innerHTML = 'Successfully submitted';
+			myWizerdForm.insertBefore( submitMsg, myWizerdForm.firstChild );
+		});
+
 	</script>
 </body>
 </html>
