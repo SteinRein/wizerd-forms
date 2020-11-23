@@ -131,7 +131,7 @@ wizerdForm.init();
 wizerdForm.destroy();
 ```
 
-### `goToPage`
+#### `goToPage`
 ```javascript
 /**
  * Manually change the current page.
@@ -142,7 +142,7 @@ const pageIndex = 2;
 wizerdForm.goToPage(pageIndex);
 ```
 
-### `setValues`
+#### `setValues`
 ```javascript
 /**
  * Set form values. setValues will check all formfields and save their
