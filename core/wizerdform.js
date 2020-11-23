@@ -113,6 +113,14 @@ export class WizerdForm {
 			this.prevButton.classList.add('wizerdform-button-hidden');
 		}
 
+		if ( this.options.submit_text ) {
+			if (pageIndex === this.pages.length - 1) {
+				this.nextButton.innerText = this.options.submit_text;
+			} else {
+				this.nextButton.innerText = this.options.next_btn_text;
+			}
+		}
+
 		this.updateProgressBar(pageIndex);
 	}
 
@@ -131,7 +139,6 @@ export class WizerdForm {
 		}
 
 		this.pages[this.curIndex].classList.remove( this.options.page_active_class );
-		this.curIndex += value;
 
 		const eventNavigate = new Event(
 			'wizerdForm_navigate',
@@ -141,14 +148,13 @@ export class WizerdForm {
 		);
 		this.form.dispatchEvent( eventNavigate );
 
-		if (this.curIndex >= this.pages.length) {
-			this.curIndex = this.pages.length - 1;
-			this.nextButton.type = 'submit';
-			if ( this.options.submit_text ) {
-				this.nextButton.innerText = this.options.submit_text;
-			}			
+		if (this.curIndex === this.pages.length - 1 && value > 0) {
+			const wizerdFormSubmitEvent = document.createEvent('HTMLEvents');
+			wizerdFormSubmitEvent.initEvent('submit', true, true);
+			wizerdFormSubmitEvent.eventName = 'submit';
+			this.form.dispatchEvent(wizerdFormSubmitEvent);
 		} else {
-			this.nextButton.type = 'button';
+			this.curIndex += value;
 		}
 
 		this.goToPage(this.curIndex);
