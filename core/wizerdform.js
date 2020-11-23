@@ -18,10 +18,7 @@ export class WizerdForm {
     const defaults = {
 			startIndex: 0,
 			pages: '.wizerdform-page',
-			exclude_form_fieldtypes: [
-				'fieldset', 
-				'button'
-			],
+			// Controls
 			controls_position: 'bottom',
 			// Classes
 			page_hidden_class: 'wizerdform-hidden-page',
@@ -45,13 +42,16 @@ export class WizerdForm {
 		// Elements
 		this.form = form;
 		this.pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? [...this.options.pages] : [...form.querySelectorAll(this.options.pages)];
-		this.formFields = this.getFormFields(this.options.exclude_form_fieldtypes);
+		this.formFields = this.getFormFields( [
+			'fieldset', 
+			'button'
+		] );
 		this.prevButton =
 		this.nextButton =
 		this.progressBar = null;
 
 		// Page Parameters
-		this.curIndex = startIndex;
+		this.curIndex = this.options.startIndex;
 
 		// Form Values
 		this.values = {};
