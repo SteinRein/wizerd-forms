@@ -153,7 +153,7 @@ wizerdForm.goToPage(pageIndex);
  * @param {object} additionalValues
  */
 const additionalValues = {
-	key = 'value'
+	key: 'value'
 };
 wizerdForm.setValues(additionalValues);
 ```
