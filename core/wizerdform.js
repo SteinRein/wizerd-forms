@@ -305,12 +305,12 @@ export class WizerdForm {
 		const prevButton = document.createElement('button');
 		prevButton.className = 'wizerdform-prev';
 		prevButton.type = 'button';
-		prevButton.innerText = this.options.prev_btn_text;
+		prevButton.innerHTML = this.options.prev_btn_text;
 
 		const nextButton = document.createElement('button');
 		nextButton.className = 'wizerdform-next';
 		nextButton.type = 'button';
-		nextButton.innerText = this.options.next_btn_text;
+		nextButton.innerHTML = this.options.next_btn_text;
 
 		const progressBar = document.createElement('div');
 		progressBar.className = 'wizerdform-progress';
