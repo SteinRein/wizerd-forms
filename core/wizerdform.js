@@ -42,10 +42,7 @@ export class WizerdForm {
 		// Elements
 		this.form = form;
 		this.pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? [...this.options.pages] : [...form.querySelectorAll(this.options.pages)];
-		this.formFields = this.getFormFields( [
-			'fieldset', 
-			'button'
-		] );
+		this.formFields = this.getFormFields();
 		this.prevButton =
 		this.nextButton =
 		this.progressBar = null;
@@ -82,15 +79,16 @@ export class WizerdForm {
 
 	/**
 	 * Get Form fields
-	 * 
-	 * @param {*} exclude excluded fieldtypes
+	 * filters all available form fields
 	 * 
 	 * @return {Element[]} Array of formfield elements
 	 */
-	getFormFields(exclude = []) {
+	getFormFields() {
 		const elements = [...this.form.elements];
 		return elements.filter( element => {
-			return exclude.indexOf( element.type ) < 0;
+      if ( element.name !== '' && element.value !== '' ) {
+        return element;
+      }
 		} );
 	}
 
