@@ -148,7 +148,7 @@ export class WizerdForm {
 		const eventNavigate = new Event(
 			'wizerdForm_navigate',
 			{
-				bubbles: true
+				cancelable: true
 			}
 		);
 		this.form.dispatchEvent( eventNavigate );
