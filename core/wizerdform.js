@@ -366,6 +366,7 @@ export class WizerdForm {
 
 		switch ( on ) {
 			case 'input':
+			case 'change':
 				this.__handle_inputChange( fn );
 				break;
 			case 'error':
