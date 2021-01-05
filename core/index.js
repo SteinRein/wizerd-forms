@@ -1,1 +1,1 @@
-module.exports = require('./wizerdform').WizerdForm;
+module.exports = require('./wizerdForm').WizerdForm;

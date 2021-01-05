@@ -1,3 +1,5 @@
+import { WizerdFormPage } from './wizerdFormPage';
+
 /**
  * wɪzə(r)d Forms
  * Author: Bastian Fießinger @SteinRein
@@ -41,8 +43,8 @@ export class WizerdForm {
 
 		// Elements
 		this.form = form;
-		this.pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? [...this.options.pages] : [...form.querySelectorAll(this.options.pages)];
-		this.formFields = this.getFormFields();
+		this.pages = this.getPages();
+		this.formFields = form.elements;
 		this.prevButton =
 		this.nextButton =
 		this.progressBar = null;
@@ -77,6 +79,16 @@ export class WizerdForm {
 		this.__delegateEvents(false);
 	}
 
+	getPages() {
+		const p = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? [...this.options.pages] : [...this.form.querySelectorAll(this.options.pages)];
+		let pages = [];
+		Array.prototype.forEach.call( p, (page, index) => {
+			const wizerdFormPage = new WizerdFormPage( this, page, index );
+			pages.push(wizerdFormPage);
+		} );
+		return pages;
+	}
+
 	/**
 	 * Get Form fields
 	 * filters all available form fields
@@ -105,11 +117,10 @@ export class WizerdForm {
 		}
 
 		Array.prototype.forEach.call( this.pages, ( page ) => {
-			page.classList.add( this.options.page_hidden_class );
+			page.hide();
 		} );
-		
-		this.pages[pageIndex].classList.remove( this.options.page_hidden_class );
-		this.pages[pageIndex].classList.add( this.options.page_active_class );
+
+		this.pages[pageIndex].show();
 
 		if ( pageIndex !== 0 ) {
 			this.prevButton.classList.remove('wizerdform-button-hidden');
@@ -137,13 +148,13 @@ export class WizerdForm {
 	 */
 	navigateForm(value = 0) {
 		if (
-			(value === 1 && !this.validate()) || 
+			(value === 1 && !this.pages[this.curIndex].validate()) || 
 			(value === -1 && this.curIndex === 0)
 		) {
 			return false;
 		}
 
-		this.pages[this.curIndex].classList.remove( this.options.page_active_class );
+		this.pages[this.curIndex].hide();
 
 		const eventNavigate = new Event(
 			'wizerdForm_navigate',
@@ -179,62 +190,11 @@ export class WizerdForm {
 			this.values[key] = additionalValues[key];
 		}
 
-		const formElements = this.form.elements;
-		Array.prototype.forEach.call( this.formFields, ( formField ) => {
-			if ( formElements[formField.name] ) {
-				this.values[formField.name] = formElements[formField.name].value
+		Array.prototype.forEach.call( this.getFormFields(), ( formField ) => {
+			if ( this.formFields[formField.name] ) {
+				this.values[formField.name] = this.formFields[formField.name].value
 			}
 		} );
-
-	}
-
-	/**
-	 * Primitive Validation
-	 * 
-	 * For browsers above IE9 use the HTMLInputElement's API checkValidity function
-	 * prior check if required form fields have any value
-	 * 
-	 * pattern validations won't work prior IE9
-	 * 
-	 * @return {boolean} validation status
-	 */
-	validate() {
-
-		let valid = true;
-
-		const eventValidationFailed = new Event(
-			'wizerdForm_validationFailed',
-			{
-				bubbles: true
-			}
-		);
-
-		if ( HTMLInputElement.prototype.checkValidity ) {
-			
-			const curPageFields = [...this.pages[this.curIndex].elements];
-			curPageFields.forEach( ( field ) => {
-				if ( ! field.checkValidity() ) {
-					field.classList.add('has-error');
-					field.dispatchEvent( eventValidationFailed );
-					valid = false;
-				}
-			} ); 
-
-		} else {
-
-			const curPageMandatoryFields = [...this.pages[this.curIndex].querySelectorAll('[required]')];
-
-			curPageMandatoryFields.forEach( ( field ) => {
-				if (field.value === null || field.value.trim() === '') {
-					field.classList.add('has-error');
-					field.dispatchEvent( eventValidationFailed );
-					valid = false;
-				}
-			} );
-
-		}
-
-		return valid;
 
 	}
 
