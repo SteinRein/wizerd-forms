@@ -383,28 +383,56 @@ export class WizerdForm {
 
 	__handle_inputChange( fn ) {
 		Array.prototype.forEach.call( this.formFields, ( formField ) => {
-			formField.addEventListener( 'change', fn.bind( this, {
-				_wizerdForm: this,
-				el: formField,
-				value: formField.value,
-			} ) );
+			formField.addEventListener( 'keyup', (evt) => {
+				
+				// Prevent Bubbling
+				if ( evt.target !== formField ) {
+					return;
+				}
+
+				const curVal = formField.value;
+				fn.bind( 
+					formField, 
+					evt, 
+					{
+						_wizerdForm: this,
+						el: formField,
+						value: curVal,
+					} 
+				)(); 
+			} );
 		} );
 	}
 
 	__handle_validation_error( fn ) {
 		Array.prototype.forEach.call( this.formFields, ( formField ) => {
-			formField.addEventListener( 'wizerdForm_validationFailed', fn.bind( this, {
-				_wizerdForm: this,
-				el: formField,
-			} ) );
+			formField.addEventListener( 'wizerdForm_validationFailed', (evt) => {
+				fn.bind( 
+					formField, 
+					evt,
+					{
+						_wizerdForm: this,
+						el: formField,
+					}
+				)();
+			} );
 		} );
 	}
 
 	__handle_navigate( fn ) {
-		this.form.addEventListener( 'wizerdForm_navigate', fn.bind( this, {
-			_wizerdForm: this,
-			page: this.curIndex
-		} ) );
+		this.form.addEventListener( 'wizerdForm_navigate', (evt) => {
+
+			const curIndex = this.curIndex;
+
+			fn.bind( 
+				this.form, 
+				evt,
+				{
+					_wizerdForm: this,
+					index: curIndex,
+				}
+			)();
+		} );
 	}
 
 }
