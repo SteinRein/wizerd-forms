@@ -12,10 +12,10 @@
 	background-color: #ffffff;
 	box-shadow: 0 5px 25px -5px rgba(0, 0, 0, 0.1);
 }
-.wizerdform-page {
+.wizerdform-hidden-page {
 	display: none;
 }
-.wizerdform-page.wizerdform-active-page {
+.wizerdform-active-page {
 	display: block;
 }
 fieldset.wizerdform-page > legend{
@@ -36,6 +36,10 @@ fieldset.wizerdform-page > legend{
 	transition: width 0.2s ease;
 }
 
+.has-error {
+	outline: red solid 2px;
+}
+
 	</style>
 
 </head>
@@ -46,6 +50,7 @@ fieldset.wizerdform-page > legend{
 		<fieldset class="wizerdform-page">
 			<label for="input_1">this field is required</label>
 			<input type="text" name="input_1" value="" required />
+			<input type="text" name="input_1_1" value="" required />
 		</fieldset>
 
 		<fieldset class="wizerdform-page">
@@ -68,17 +73,30 @@ fieldset.wizerdform-page > legend{
 		} );
 		wizerdForm.init();
 
-		wizerdForm.on('error', (data, e) => {
-			console.log(e);
+		wizerdForm.insertPage(() => { 
+			return `<fieldset>
+				<label for="input_4">This is fetched</label>
+				<input type="text" name="input_4" value="" />
+			</fieldset>`; },
+			0
+		);
+
+		wizerdForm.on('input', (event, data) => {
+			console.log(data);
+		});
+
+		wizerdForm.on('error', (event, data) => {
+			console.log(data);
+			console.log(event);
 			data.el.reportValidity();
 		});
 
-		wizerdForm.on('navigate', (e) => {
+		wizerdForm.on('navigate', (event, data) => {
 			const messages = myWizerdForm.parentElement.querySelectorAll('.msg');
 			messages.forEach( (msg) => {
 				msg.parentElement.removeChild(msg);
 			} );
-			console.log(e);
+			console.log(data);
 		});
 
 		myWizerdForm.addEventListener('submit', (e) => {

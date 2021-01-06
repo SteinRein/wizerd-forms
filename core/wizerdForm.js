@@ -43,7 +43,7 @@ export class WizerdForm {
 
 		// Elements
 		this.form = form;
-		this.pages = this.getPages();
+		this.pages = this.initPages();
 		this.formFields = form.elements;
 		this.prevButton =
 		this.nextButton =
@@ -79,14 +79,79 @@ export class WizerdForm {
 		this.__delegateEvents(false);
 	}
 
-	getPages() {
+	/**
+	 * Get initial pages
+	 */
+	initPages() {
 		const p = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? [...this.options.pages] : [...this.form.querySelectorAll(this.options.pages)];
+		Array.prototype.forEach.call( p, (page) => {
+			page.setAttribute('data-wizerdform-page', true);
+		} );
+		return this.readPages();
+	}
+
+	/**
+	 * Setup available wɪzə(r)d Form Pages
+	 */
+	readPages() {
+		const pageList = [...this.form.querySelectorAll('[data-wizerdform-page]')];
 		let pages = [];
-		Array.prototype.forEach.call( p, (page, index) => {
+		Array.prototype.forEach.call( pageList, (page, index) => {
 			const wizerdFormPage = new WizerdFormPage( this, page, index );
 			pages.push(wizerdFormPage);
 		} );
 		return pages;
+	}
+
+	/**
+	 * Insert page by HTML string
+	 * The first parameter may contain a callable function that must return a string
+	 * After that reset wɪzə(r)d Form Pages and move to the current index
+	 * 
+	 * @param {string|function} html 
+	 * @param {number} index 
+	 */
+	insertPage(html, index = -1) {
+
+		if ( typeof html === 'function' ) {
+			html = html();
+		}
+
+		if ( typeof html !== 'string' ) {
+			throw new TypeError('parameter 2 of insertPage must be typeof string.');
+		}
+
+		if ( index < 0 || index > this.pages.length ) {
+			index = this.pages.length;
+		}
+
+		let pageFragment = document.createDocumentFragment();
+		let temp = document.createElement('div');
+		pageFragment.appendChild(temp);
+		temp.insertAdjacentHTML('beforebegin', html);
+		pageFragment.removeChild(temp);
+
+		if ( pageFragment.children.length > 1 ) {
+			let wizerdFormPageWrapper = document.createElement('div');
+			wizerdFormPageWrapper.setAttribute('data-wizerdform-page', true);
+			while ( pageFragment.firstChild ) {
+				wizerdFormPageWrapper.appendChild(pageFragment.firstChild);
+			}
+			pageFragment.appendChild(wizerdFormPageWrapper);
+		} else {
+			pageFragment.firstElementChild.setAttribute('data-wizerdform-page', true);
+		}		
+
+		let reference = this.pages[index];
+		if ( typeof reference !== 'undefined' ) {
+			this.form.insertBefore( pageFragment, reference.page );
+		} else {
+			this.form.insertBefore( pageFragment, this.pages[index - 1].page.nextSibling);
+		}
+
+		this.pages = this.readPages();
+		this.goToPage(this.curIndex);
+
 	}
 
 	/**
@@ -383,6 +448,7 @@ export class WizerdForm {
 		this.form.addEventListener( 'wizerdForm_navigate', (evt) => {
 
 			const curIndex = this.curIndex;
+			const curPage = this.pages[curIndex];
 
 			fn.bind( 
 				this.form, 
