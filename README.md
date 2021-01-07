@@ -1,6 +1,8 @@
 <img src="https://raw.githubusercontent.com/SteinRein/wizerd-forms/master/assets/wizerd-forms-logo.svg" width="300">
 
-<b style="background: red; padding: .5rem; color: white">Currently work in Progress!</b>
+<b>Currently work in Progress!</b>
+
+[![CodeFactor](https://www.codefactor.io/repository/github/steinrein/wizerd-forms/badge)](https://www.codefactor.io/repository/github/steinrein/wizerd-forms)
 
 # wɪzə(r)d Forms
 wɪzə(r)d is the Phonetic transcription of wizard. 
@@ -140,6 +142,45 @@ wizerdForm.destroy();
  */
 const pageIndex = 2;
 wizerdForm.goToPage(pageIndex);
+```
+
+#### `insertPage`
+There are multiple ways of adding pages to your wɪzə(r)d Form after initialization 
+```javascript
+/**
+ * Insert page by HTML string or DOM Element
+ * The first parameter may contain a callable function that must return either
+ * a string or a DOM Element.
+ * 
+ * After that reset wɪzə(r)d Form Pages and move to the current index
+ * 
+ * @param {string|function} page 
+ * @param {number} index 
+ */
+
+// Add Page by string
+const newPageByString = `<fieldset>
+	<input type="text" name="byString" value="" />
+</fieldset>`;
+wizerdForm.insertPage( newPageByString, 0 );
+
+// Add Page by DOM Element
+const newPageByDOMNode = document.createElement('fieldset');
+const newPageFieldByDOMNode = document.createElement('input');
+newPageFieldByDOMNode.name = 'byDOMNode';
+newPageFieldByDOMNode.value = '';
+newPageByDOMNode.appendChild(newPageFieldByDOMNode);
+wizerdForm.insertPage( newPageByDOMNode, 0 );
+
+// Add Page by Callback
+// The Callback must return either a string or a DOM Element
+const newPageByCallback = () => {
+	const page = `<fieldset>
+		<input type="text" name="byString" value="" />
+	</fieldset>`;
+	return page;
+};
+wizerdForm.insertPage( newPageByCallback, 0 );
 ```
 
 #### `setValues`

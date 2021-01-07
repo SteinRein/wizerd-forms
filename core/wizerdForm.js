@@ -113,7 +113,7 @@ export class WizerdForm {
 	}
 
 	/**
-	 * Insert page by HTML string
+	 * Insert page by HTML string or DOM Element
 	 * The first parameter may contain a callable function that must return either
 	 * a string or a DOM Element.
 	 * 
