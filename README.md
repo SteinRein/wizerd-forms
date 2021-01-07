@@ -114,56 +114,49 @@ wizerdForm.init();
 ### Methods
 
 #### `init`
+Initialize the current wɪzə(r)d Form Instance.
+This Method will add navigation controls, move the form to it's startIndex and add all Event listeners.
+
 ```javascript
-/**
- * Initialize the current wɪzə(r)d Form Instance.
- * This Method will add navigation controls, move the form
- * to it's startIndex and add all Event listeners.
- */
 wizerdForm.init();
 ```
 
 #### `destroy`
+Destroy the current wɪzə(r)d Form Instance.
+This Method will remove navigation controls, set the active pageIndex to 0 and remove all Event listeners.
 ```javascript
-/**
- * Destroy the current wɪzə(r)d Form Instance.
- * This Method will remove navigation controls, set the active
- * pageIndex to 0 and remove all Event listeners.
- */
 wizerdForm.destroy();
 ```
 
 #### `goToPage`
+Manually change the current page index
+
+Arguments:
+1. index - the new page Index
+
 ```javascript
-/**
- * Manually change the current page.
- * 
- * @param {number} pageIndex 
- */
 const pageIndex = 2;
 wizerdForm.goToPage(pageIndex);
 ```
 
 #### `insertPage`
-There are multiple ways of adding pages to your wɪzə(r)d Form after initialization 
-```javascript
-/**
- * Insert page by HTML string or DOM Element
- * The first parameter may contain a callable function that must return either
- * a string or a DOM Element.
- * 
- * After that reset wɪzə(r)d Form Pages and move to the current index
- * 
- * @param {string|function} page 
- * @param {number} index 
- */
+You can insert additional pages using the `insertPage` method to your wɪzə(r)d Form after initialization.
 
+Arguments:
+1. page - a string, DOM Element or a callback function that returns the page
+2. index - the page Index where the new page should appear at
+
+**using a string:**
+```javascript
 // Add Page by string
 const newPageByString = `<fieldset>
 	<input type="text" name="byString" value="" />
 </fieldset>`;
 wizerdForm.insertPage( newPageByString, 0 );
+```
 
+**using a DOM Element:**
+```javascript
 // Add Page by DOM Element
 const newPageByDOMNode = document.createElement('fieldset');
 const newPageFieldByDOMNode = document.createElement('input');
@@ -171,7 +164,10 @@ newPageFieldByDOMNode.name = 'byDOMNode';
 newPageFieldByDOMNode.value = '';
 newPageByDOMNode.appendChild(newPageFieldByDOMNode);
 wizerdForm.insertPage( newPageByDOMNode, 0 );
+```
 
+**using a Callback Function:**
+```javascript
 // Add Page by Callback
 // The Callback must return either a string or a DOM Element
 const newPageByCallback = () => {
@@ -184,15 +180,13 @@ wizerdForm.insertPage( newPageByCallback, 0 );
 ```
 
 #### `setValues`
+Set form values. setValues will check all formfields and save their values to it's instance values variable.
+Use the additionalValues parameter to add your own form values.
+
+Parameters:
+1. additionalValues - custom values to add
+
 ```javascript
-/**
- * Set form values. setValues will check all formfields and save their
- * values to it's instance values variable.
- * 
- * Use the additionalValues param to add your own form values.
- * 
- * @param {object} additionalValues
- */
 const additionalValues = {
 	key: 'value'
 };
