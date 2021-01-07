@@ -1,3 +1,6 @@
+/**
+ * Internal Dependencies
+ */
 import { WizerdForm } from "./wizerdForm";
 
 /**

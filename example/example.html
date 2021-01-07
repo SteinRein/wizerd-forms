@@ -73,13 +73,13 @@ fieldset.wizerdform-page > legend{
 		} );
 		wizerdForm.init();
 
-		wizerdForm.insertPage(() => { 
-			return `<fieldset>
-				<label for="input_4">This is fetched</label>
-				<input type="text" name="input_4" value="" />
-			</fieldset>`; },
-			0
-		);
+		const newFieldset = document.createElement('fieldset');
+		const newField = document.createElement('input');
+		newField.name = 'testfield';
+		newField.value = '';
+		newFieldset.appendChild(newField);
+
+		wizerdForm.insertPage( newFieldset, 0 );
 
 		wizerdForm.on('input', (event, data) => {
 			console.log(data);

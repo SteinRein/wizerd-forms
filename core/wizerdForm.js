@@ -1,4 +1,13 @@
+/**
+ * Internal Dependencies
+ */
 import { WizerdFormPage } from './wizerdFormPage';
+import { isDOM } from './utils/isDOM';
+
+/**
+ * External Dependencies
+ */
+import { isString } from '@s-libs/micro-dash';
 
 /**
  * wɪzə(r)d Forms
@@ -85,7 +94,7 @@ export class WizerdForm {
 	initPages() {
 		const p = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? [...this.options.pages] : [...this.form.querySelectorAll(this.options.pages)];
 		Array.prototype.forEach.call( p, (page) => {
-			page.setAttribute('data-wizerdform-page', true);
+			this.__setPageAttributes(page);
 		} );
 		return this.readPages();
 	}
@@ -105,53 +114,83 @@ export class WizerdForm {
 
 	/**
 	 * Insert page by HTML string
-	 * The first parameter may contain a callable function that must return a string
+	 * The first parameter may contain a callable function that must return either
+	 * a string or a DOM Element.
+	 * 
 	 * After that reset wɪzə(r)d Form Pages and move to the current index
 	 * 
-	 * @param {string|function} html 
+	 * @param {string|function} page 
 	 * @param {number} index 
 	 */
-	insertPage(html, index = -1) {
+	insertPage(page, index = -1) {
 
-		if ( typeof html === 'function' ) {
-			html = html();
+		if ( typeof page === 'function' ) {
+			page = page();
 		}
 
-		if ( typeof html !== 'string' ) {
-			throw new TypeError('parameter 2 of insertPage must be typeof string.');
+		let wizerdFormPageNode;
+
+		if ( isString(page) && page !== '' ) {
+			wizerdFormPageNode = this.__buildPageFromString(page);
+		} else if ( isDOM( page ) ) {
+			wizerdFormPageNode = this.__buildPageFromDOMNode(page);
+		} else {
+			throw new TypeError('Page creation failed. Parameter 1 of insertPage must return a valid string or DOM Element.');
 		}
 
 		if ( index < 0 || index > this.pages.length ) {
 			index = this.pages.length;
 		}
 
-		let pageFragment = document.createDocumentFragment();
-		let temp = document.createElement('div');
-		pageFragment.appendChild(temp);
-		temp.insertAdjacentHTML('beforebegin', html);
-		pageFragment.removeChild(temp);
-
-		if ( pageFragment.children.length > 1 ) {
-			let wizerdFormPageWrapper = document.createElement('div');
-			wizerdFormPageWrapper.setAttribute('data-wizerdform-page', true);
-			while ( pageFragment.firstChild ) {
-				wizerdFormPageWrapper.appendChild(pageFragment.firstChild);
-			}
-			pageFragment.appendChild(wizerdFormPageWrapper);
-		} else {
-			pageFragment.firstElementChild.setAttribute('data-wizerdform-page', true);
-		}		
-
 		let reference = this.pages[index];
 		if ( typeof reference !== 'undefined' ) {
-			this.form.insertBefore( pageFragment, reference.page );
+			this.form.insertBefore( wizerdFormPageNode, reference.page );
 		} else {
-			this.form.insertBefore( pageFragment, this.pages[index - 1].page.nextSibling);
+			this.form.insertBefore( wizerdFormPageNode, this.pages[index - 1].page.nextSibling);
 		}
 
 		this.pages = this.readPages();
 		this.goToPage(this.curIndex);
 
+	}
+
+	/**
+	 * Create a valid DOM Element from string and create a wrapper
+	 * if there are multiple Elements present
+	 * 
+	 * @param {string} str 
+	 * 
+	 * @return {DocumentFragment}
+	 */
+	__buildPageFromString(str) {
+
+		let pageFragment = document.createDocumentFragment();
+		let temp = document.createElement('div');
+		pageFragment.appendChild(temp);
+		temp.insertAdjacentHTML('beforebegin', str);
+		pageFragment.removeChild(temp);
+
+		if ( pageFragment.children.length > 1 ) {
+			let wizerdFormPageWrapper = document.createElement('div');
+			while ( pageFragment.firstChild ) {
+				wizerdFormPageWrapper.appendChild(pageFragment.firstChild);
+			}
+			pageFragment.appendChild(wizerdFormPageWrapper);
+		}
+
+		this.__setPageAttributes(pageFragment.firstElementChild);
+
+		return pageFragment;
+
+	}
+
+	__buildPageFromDOMNode(DOMNode) {
+		this.__setPageAttributes(DOMNode);
+		return DOMNode;
+	}
+
+	__setPageAttributes(page) {
+		page.setAttribute('data-wizerdform-page', true);
 	}
 
 	/**
