@@ -1,7 +1,7 @@
 {
   "name": "@steinrein/wizerd-forms",
   "version": "1.0.0",
-  "description": "<img src=\"https://raw.githubusercontent.com/SteinRein/wizerd-forms/master/assets/wizerd-forms-logo.svg?token=AJ5TB5PBQSF4BGJICE7KJYS7VZYBC\" width=\"300\">",
+  "description": "",
   "main": "core/wizerdForm.js",
   "directories": {
     "example": "example"
