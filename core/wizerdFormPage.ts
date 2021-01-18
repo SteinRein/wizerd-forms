@@ -1,6 +1,7 @@
 /**
  * Internal Dependencies
  */
+import { getInputValues } from './utils/input';
 import { validateInput } from './utils/validation';
 
 export default class {
@@ -38,9 +39,9 @@ export default class {
 	/**
 	 * get current Page Elements
 	 *
-	 * @return {HTMLCollection}
+	 * @return {HTMLFormControlsCollection}
 	 */
-	getElements(): HTMLCollection {
+	getElements(): HTMLFormControlsCollection {
 		return this.page.getElementsByClassName('wizerdform-element');
 	}
 
@@ -50,16 +51,12 @@ export default class {
 	 * @return Object
 	 */
 	getValues(): Object {
-		const elements: Array<any> = Array.prototype.filter.call(this.getElements(), (el) => {
+		const elements: HTMLFormControlsCollection = Array.prototype.filter.call(this.getElements(), (el) => {
       if ( el.name !== '' ) {
         return el;
       }
 		});
-		const map: Object = {};
-		elements.forEach((el) => {
-			map[el.name] = el.value;
-		});
-		return map;
+		return getInputValues(elements);
 	}
 
 	/**
@@ -79,7 +76,7 @@ export default class {
 			'wizerdForm_validationFailed'
 		);
 
-		const elements: HTMLCollection = this.getElements();
+		const elements: HTMLFormControlsCollection = this.getElements();
 		Array.prototype.forEach.call( elements, ( field ) => {
 			fieldValidated = field;
 			valid = validateInput(field);

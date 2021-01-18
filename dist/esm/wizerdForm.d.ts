@@ -71,6 +71,18 @@ export default class WizerdForm {
      */
     private setInitialPages;
     /**
+     * Get all Elements of the form
+     *
+     * @return {HTMLFormControlsCollection}
+     */
+    getElements(): HTMLFormControlsCollection;
+    /**
+     * Get All form values
+     *
+     * @return Object
+     */
+    getValues(): Object;
+    /**
      * Get instance of a `WizerdFormPage` by index
      *
      * @param index

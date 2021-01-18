@@ -1,4 +1,4 @@
-define(["require", "exports", "./utils/validation"], function (require, exports, validation_1) {
+define(["require", "exports", "./utils/input", "./utils/validation"], function (require, exports, input_1, validation_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var default_1 = /** @class */ (function () {
@@ -26,7 +26,7 @@ define(["require", "exports", "./utils/validation"], function (require, exports,
         /**
          * get current Page Elements
          *
-         * @return {HTMLCollection}
+         * @return {HTMLFormControlsCollection}
          */
         default_1.prototype.getElements = function () {
             return this.page.getElementsByClassName('wizerdform-element');
@@ -42,11 +42,7 @@ define(["require", "exports", "./utils/validation"], function (require, exports,
                     return el;
                 }
             });
-            var map = {};
-            elements.forEach(function (el) {
-                map[el.name] = el.value;
-            });
-            return map;
+            return input_1.getInputValues(elements);
         };
         /**
          * Primitive Validation

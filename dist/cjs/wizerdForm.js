@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var DOMUtils_1 = require("./utils/DOMUtils");
 var object_1 = require("./utils/object");
+var input_1 = require("./utils/input");
 var wizerdFormControl_1 = require("./wizerdFormControl");
 var wizerdFormPage_1 = require("./wizerdFormPage");
 /**
@@ -129,6 +130,27 @@ var WizerdForm = /** @class */ (function () {
             var p = new wizerdFormPage_1.default(page, index, _this.options);
             _this.pages.push(p);
         });
+    };
+    /**
+     * Get all Elements of the form
+     *
+     * @return {HTMLFormControlsCollection}
+     */
+    WizerdForm.prototype.getElements = function () {
+        return this.form.getElementsByClassName('wizerdform-element');
+    };
+    /**
+     * Get All form values
+     *
+     * @return Object
+     */
+    WizerdForm.prototype.getValues = function () {
+        var elements = Array.prototype.filter.call(this.getElements(), function (el) {
+            if (el.name !== '') {
+                return el;
+            }
+        });
+        return input_1.getInputValues(elements);
     };
     /**
      * Get instance of a `WizerdFormPage` by index
@@ -267,7 +289,7 @@ var WizerdForm = /** @class */ (function () {
         if (update === void 0) { update = true; }
         var ctr = new wizerdFormControl_1.default(key, tagName, props, inner);
         this.controls[key] = ctr;
-        if (update) {
+        if (!!update) {
             this.updateControls();
         }
         return ctr;

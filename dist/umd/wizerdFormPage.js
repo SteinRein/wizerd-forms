@@ -4,7 +4,7 @@
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./utils/validation"], factory);
+        define(["require", "exports", "./utils/input", "./utils/validation"], factory);
     }
 })(function (require, exports) {
     "use strict";
@@ -12,6 +12,7 @@
     /**
      * Internal Dependencies
      */
+    var input_1 = require("./utils/input");
     var validation_1 = require("./utils/validation");
     var default_1 = /** @class */ (function () {
         function default_1(page, index, options) {
@@ -38,7 +39,7 @@
         /**
          * get current Page Elements
          *
-         * @return {HTMLCollection}
+         * @return {HTMLFormControlsCollection}
          */
         default_1.prototype.getElements = function () {
             return this.page.getElementsByClassName('wizerdform-element');
@@ -54,11 +55,7 @@
                     return el;
                 }
             });
-            var map = {};
-            elements.forEach(function (el) {
-                map[el.name] = el.value;
-            });
-            return map;
+            return input_1.getInputValues(elements);
         };
         /**
          * Primitive Validation

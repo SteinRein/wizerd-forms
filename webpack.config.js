@@ -28,6 +28,7 @@ module.exports = [
 			library: 'WizerdForm',
 			libraryTarget: 'umd',
 			umdNamedDefine: true,
+			libraryExport: 'default'
 		},
 		resolve: {
 			extensions: ['.ts', '.js', '.json']

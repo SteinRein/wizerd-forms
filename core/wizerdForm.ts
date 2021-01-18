@@ -9,6 +9,7 @@ import { wizerdFormCreateElement } from './interfaces/wizerdFormCreateElement';
  */
 import { createElement, renderNode, mountChildElements } from './utils/DOMUtils';
 import { ObjValues } from './utils/object';
+import { getInputValues } from './utils/input';
 import WizerdFormControl from './wizerdFormControl';
 import WizerdFormPage from './wizerdFormPage';
 
@@ -147,11 +148,34 @@ export default class WizerdForm {
 		const pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ?
 										Array.prototype.slice.call(this.options.pages as unknown as NodeList | HTMLCollection) :
 										Array.prototype.slice.call(this.form.querySelectorAll(this.options.pages));
-										
+		
 		pages.forEach((page, index) => {
 			const p = new WizerdFormPage(page, index, this.options);
 			this.pages.push(p);
 		});
+	}
+
+	/**
+	 * Get all Elements of the form
+	 *
+	 * @return {HTMLFormControlsCollection}
+	 */
+	getElements(): HTMLFormControlsCollection {
+		return this.form.getElementsByClassName('wizerdform-element');
+	}
+
+	/**
+	 * Get All form values
+	 *
+	 * @return Object
+	 */
+	getValues(): Object {
+		const elements: HTMLFormControlsCollection = Array.prototype.filter.call(this.getElements(), (el) => {
+      if ( el.name !== '' ) {
+        return el;
+      }
+		});
+		return getInputValues(elements);
 	}
 
 	/**
@@ -347,6 +371,7 @@ export default class WizerdForm {
 				'fragment',
 				{},
 				[...Array.from(ObjValues(this.controls), ctr => ctr.data)]
+				// Array.prototype.slice.call(ObjValues(this.controls), ctr => ctr.data)
 			);
 
 			const $controls = renderNode(controls);

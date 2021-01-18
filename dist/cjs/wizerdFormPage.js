@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Internal Dependencies
  */
+var input_1 = require("./utils/input");
 var validation_1 = require("./utils/validation");
 var default_1 = /** @class */ (function () {
     function default_1(page, index, options) {
@@ -29,7 +30,7 @@ var default_1 = /** @class */ (function () {
     /**
      * get current Page Elements
      *
-     * @return {HTMLCollection}
+     * @return {HTMLFormControlsCollection}
      */
     default_1.prototype.getElements = function () {
         return this.page.getElementsByClassName('wizerdform-element');
@@ -45,11 +46,7 @@ var default_1 = /** @class */ (function () {
                 return el;
             }
         });
-        var map = {};
-        elements.forEach(function (el) {
-            map[el.name] = el.value;
-        });
-        return map;
+        return input_1.getInputValues(elements);
     };
     /**
      * Primitive Validation

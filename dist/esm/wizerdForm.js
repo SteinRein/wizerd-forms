@@ -10,6 +10,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
  */
 import { createElement, renderNode, mountChildElements } from './utils/DOMUtils';
 import { ObjValues } from './utils/object';
+import { getInputValues } from './utils/input';
 import WizerdFormControl from './wizerdFormControl';
 import WizerdFormPage from './wizerdFormPage';
 /**
@@ -127,6 +128,27 @@ var WizerdForm = /** @class */ (function () {
             var p = new WizerdFormPage(page, index, _this.options);
             _this.pages.push(p);
         });
+    };
+    /**
+     * Get all Elements of the form
+     *
+     * @return {HTMLFormControlsCollection}
+     */
+    WizerdForm.prototype.getElements = function () {
+        return this.form.getElementsByClassName('wizerdform-element');
+    };
+    /**
+     * Get All form values
+     *
+     * @return Object
+     */
+    WizerdForm.prototype.getValues = function () {
+        var elements = Array.prototype.filter.call(this.getElements(), function (el) {
+            if (el.name !== '') {
+                return el;
+            }
+        });
+        return getInputValues(elements);
     };
     /**
      * Get instance of a `WizerdFormPage` by index

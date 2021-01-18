@@ -33,11 +33,14 @@ export function renderElement(node) {
     // Set Attributes
     for (var _i = 0, _a = ObjEntries(node.props); _i < _a.length; _i++) {
         var _b = _a[_i], k = _b[0], v = _b[1];
-        if (k.lastIndexOf('on', 0) !== 0) { // exclude attributes that should trigger events
-            el.setAttribute(k, v);
+        if (k.lastIndexOf('on', 0) === 0) { // exclude attributes that should trigger events
+            el.addEventListener(k.slice(2).toLowerCase(), v);
+        }
+        else if (el[k] !== 'undefined') {
+            el[k] = v;
         }
         else {
-            el.addEventListener(k.slice(2).toLowerCase(), v);
+            el.setAttribute(k, v);
         }
     }
     // Set Children

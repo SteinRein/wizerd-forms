@@ -11,7 +11,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./utils/DOMUtils", "./utils/object", "./wizerdFormControl", "./wizerdFormPage", "@s-libs/micro-dash"], factory);
+        define(["require", "exports", "./utils/DOMUtils", "./utils/object", "./utils/input", "./wizerdFormControl", "./wizerdFormPage", "@s-libs/micro-dash"], factory);
     }
 })(function (require, exports) {
     "use strict";
@@ -21,6 +21,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
      */
     var DOMUtils_1 = require("./utils/DOMUtils");
     var object_1 = require("./utils/object");
+    var input_1 = require("./utils/input");
     var wizerdFormControl_1 = require("./wizerdFormControl");
     var wizerdFormPage_1 = require("./wizerdFormPage");
     /**
@@ -138,6 +139,27 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
                 var p = new wizerdFormPage_1.default(page, index, _this.options);
                 _this.pages.push(p);
             });
+        };
+        /**
+         * Get all Elements of the form
+         *
+         * @return {HTMLFormControlsCollection}
+         */
+        WizerdForm.prototype.getElements = function () {
+            return this.form.getElementsByClassName('wizerdform-element');
+        };
+        /**
+         * Get All form values
+         *
+         * @return Object
+         */
+        WizerdForm.prototype.getValues = function () {
+            var elements = Array.prototype.filter.call(this.getElements(), function (el) {
+                if (el.name !== '') {
+                    return el;
+                }
+            });
+            return input_1.getInputValues(elements);
         };
         /**
          * Get instance of a `WizerdFormPage` by index
@@ -276,7 +298,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             if (update === void 0) { update = true; }
             var ctr = new wizerdFormControl_1.default(key, tagName, props, inner);
             this.controls[key] = ctr;
-            if (update) {
+            if (!!update) {
                 this.updateControls();
             }
             return ctr;

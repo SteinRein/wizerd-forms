@@ -1,6 +1,7 @@
 /**
  * Internal Dependencies
  */
+import { getInputValues } from './utils/input';
 import { validateInput } from './utils/validation';
 var default_1 = /** @class */ (function () {
     function default_1(page, index, options) {
@@ -27,7 +28,7 @@ var default_1 = /** @class */ (function () {
     /**
      * get current Page Elements
      *
-     * @return {HTMLCollection}
+     * @return {HTMLFormControlsCollection}
      */
     default_1.prototype.getElements = function () {
         return this.page.getElementsByClassName('wizerdform-element');
@@ -43,11 +44,7 @@ var default_1 = /** @class */ (function () {
                 return el;
             }
         });
-        var map = {};
-        elements.forEach(function (el) {
-            map[el.name] = el.value;
-        });
-        return map;
+        return getInputValues(elements);
     };
     /**
      * Primitive Validation

@@ -51,6 +51,37 @@ fieldset.wizerdform-page > legend{
 			<h1>1. Page</h1>
 			<label for="input_1">test</label>
 			<input type="text" name="input_1" value="" />
+
+			<div class="wcpfw-form-radio-group">
+				<label for="wcpfw-form-term-pa_gesteinsart_0" class="wcpfw-form-input">
+				<input name="pa_gesteinsart" id="wcpfw-form-term-pa_gesteinsart_0" type="radio" value="1950" required="" class="wizerdform-element">
+				<div class="wcpfw-form-inputtext">
+					<span class="wcpfw-form-label">can you name it?</span>
+					<span class="wcpfw-form-desc">no u cant</span>
+				</div>
+				</label>
+								<label for="wcpfw-form-term-pa_gesteinsart_1" class="wcpfw-form-input">
+				<input name="pa_gesteinsart" id="wcpfw-form-term-pa_gesteinsart_1" type="radio" value="1947" required="" class="wizerdform-element">
+				<div class="wcpfw-form-inputtext">
+					<span class="wcpfw-form-label">Gestein</span>
+					<span class="wcpfw-form-desc">some description</span>
+				</div>
+				</label>
+								<label for="wcpfw-form-term-pa_gesteinsart_2" class="wcpfw-form-input">
+				<input name="pa_gesteinsart" id="wcpfw-form-term-pa_gesteinsart_2" type="radio" value="1949" required="" class="wizerdform-element">
+				<div class="wcpfw-form-inputtext">
+					<span class="wcpfw-form-label">more stein</span>
+					<span class="wcpfw-form-desc">sdfdsafdsf </span>
+				</div>
+				</label>
+								<label for="wcpfw-form-term-pa_gesteinsart_3" class="wcpfw-form-input">
+				<input name="pa_gesteinsart" id="wcpfw-form-term-pa_gesteinsart_3" type="radio" value="1948" required="" class="wizerdform-element">
+				<div class="wcpfw-form-inputtext">
+					<span class="wcpfw-form-label">Silikat</span>
+					<span class="wcpfw-form-desc">flsdjflsdajf sdf ds dsf dsf</span>
+				</div>
+				</label>
+			</div>
 		</fieldset>
 
 		<fieldset class="wizerdform-page">
@@ -122,6 +153,12 @@ fieldset.wizerdform-page > legend{
 				}
 			]
 		)
+
+		wizerdForm.on('navigate', () => {
+			let curPageValues = wizerdForm.getCurrentPage().getValues();
+			let allValues = wizerdForm.getValues();
+			console.log(curPageValues, allValues);
+		});
 
 		wizerdForm.on('submit', () => {
 			console.log('form was submitted');

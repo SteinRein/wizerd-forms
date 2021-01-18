@@ -5,7 +5,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             r[k] = a[j];
     return r;
 };
-define(["require", "exports", "./utils/DOMUtils", "./utils/object", "./wizerdFormControl", "./wizerdFormPage", "@s-libs/micro-dash"], function (require, exports, DOMUtils_1, object_1, wizerdFormControl_1, wizerdFormPage_1, micro_dash_1) {
+define(["require", "exports", "./utils/DOMUtils", "./utils/object", "./utils/input", "./wizerdFormControl", "./wizerdFormPage", "@s-libs/micro-dash"], function (require, exports, DOMUtils_1, object_1, input_1, wizerdFormControl_1, wizerdFormPage_1, micro_dash_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     /**
@@ -119,6 +119,27 @@ define(["require", "exports", "./utils/DOMUtils", "./utils/object", "./wizerdFor
                 var p = new wizerdFormPage_1.default(page, index, _this.options);
                 _this.pages.push(p);
             });
+        };
+        /**
+         * Get all Elements of the form
+         *
+         * @return {HTMLFormControlsCollection}
+         */
+        WizerdForm.prototype.getElements = function () {
+            return this.form.getElementsByClassName('wizerdform-element');
+        };
+        /**
+         * Get All form values
+         *
+         * @return Object
+         */
+        WizerdForm.prototype.getValues = function () {
+            var elements = Array.prototype.filter.call(this.getElements(), function (el) {
+                if (el.name !== '') {
+                    return el;
+                }
+            });
+            return input_1.getInputValues(elements);
         };
         /**
          * Get instance of a `WizerdFormPage` by index
@@ -257,7 +278,7 @@ define(["require", "exports", "./utils/DOMUtils", "./utils/object", "./wizerdFor
             if (update === void 0) { update = true; }
             var ctr = new wizerdFormControl_1.default(key, tagName, props, inner);
             this.controls[key] = ctr;
-            if (update) {
+            if (!!update) {
                 this.updateControls();
             }
             return ctr;

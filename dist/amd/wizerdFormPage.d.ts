@@ -10,9 +10,9 @@ export default class {
     /**
      * get current Page Elements
      *
-     * @return {HTMLCollection}
+     * @return {HTMLFormControlsCollection}
      */
-    getElements(): HTMLCollection;
+    getElements(): HTMLFormControlsCollection;
     /**
      * Get Values of current Page
      *
