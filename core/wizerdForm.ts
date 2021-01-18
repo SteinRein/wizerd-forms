@@ -144,8 +144,8 @@ export default class WizerdForm {
 	 * @return {void}
 	 */
 	private setInitialPages(): void {
-		const pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? 
-										Array.prototype.slice.call(this.options.pages as unknown as NodeList | HTMLCollection) : 
+		const pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ?
+										Array.prototype.slice.call(this.options.pages as unknown as NodeList | HTMLCollection) :
 										Array.prototype.slice.call(this.form.querySelectorAll(this.options.pages));
 										
 		pages.forEach((page, index) => {

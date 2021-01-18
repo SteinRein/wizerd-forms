@@ -276,7 +276,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             if (update === void 0) { update = true; }
             var ctr = new wizerdFormControl_1.default(key, tagName, props, inner);
             this.controls[key] = ctr;
-            if (!!update) {
+            if (update) {
                 this.updateControls();
             }
             return ctr;
