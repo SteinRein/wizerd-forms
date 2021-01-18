@@ -1,5 +1,5 @@
 export interface wizerdFormCreateElement {
-	tagName: string, 
+	tagName: string,
 	props: Object,
 	children: Array<Object>
 }
