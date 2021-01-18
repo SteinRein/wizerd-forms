@@ -1,10 +1,11 @@
-<img src="https://raw.githubusercontent.com/SteinRein/wizerd-forms/master/assets/wizerd-forms-logo.svg" width="300">
+<p align="center">
+	<img src="https://raw.githubusercontent.com/SteinRein/wizerd-forms/master/assets/wizerd-forms-logo.svg" width="300">
+</p>
 
-<b>Currently work in Progress!</b>
+# wɪzə(r)d Forms
 
 [![CodeFactor](https://www.codefactor.io/repository/github/steinrein/wizerd-forms/badge)](https://www.codefactor.io/repository/github/steinrein/wizerd-forms)
 
-# wɪzə(r)d Forms
 Bored of these old fashioned HTML Forms that put all the elements on the same page?
 
 Good you're here!
@@ -34,13 +35,6 @@ const options = {};
 const $WizerdForm = new WizerdForm( element, options );
 $WizerdForm.init();
 ```
-
-	startIndex: number,
-	pages: string,
-	controlsPosition: 'bottom' | 'top',
-	
-	hiddenPageClass: string,
-	activePageClass: string,
 
 ### Options
 <dl>
