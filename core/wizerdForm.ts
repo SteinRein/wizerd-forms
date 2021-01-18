@@ -38,9 +38,9 @@ export default class WizerdForm {
 
 	/**
 	 * wɪzə(r)d Form Constructor
-	 *  
+	 *
 	 * @param {HTMLFormElement} form
-	 * @param {WizerdFormOptions} options 
+	 * @param {WizerdFormOptions} options
 	 */
 	constructor(form: HTMLFormElement, options: WizerdFormOptions) {
 
@@ -79,9 +79,9 @@ export default class WizerdForm {
 	/**
 	 * Initialize the current wɪzə(r)d Form Instance.
 	 * This Method will apply classes to all form elements,
-	 * move the form to it's startIndex and set all 
+	 * move the form to it's startIndex and set all
 	 * Form controls
-	 * 
+	 *
 	 * @return {void}
 	 */
 	init(): void {
@@ -97,7 +97,7 @@ export default class WizerdForm {
 	 * This Method will remove form element classes, set the active
 	 * pageIndex to 0 and remove all Form controls as well as the
 	 * Form control wrapper if it was added by wɪzə(r)d Forms.
-	 * 
+	 *
 	 * @return {void}
 	 */
 	destroy(): void {
@@ -113,9 +113,9 @@ export default class WizerdForm {
 	/**
 	 * Apply classes to all form elements
 	 * this will ensure that these elements are accessible to pages
-	 * even if a page is not typeof HTMLFormElement or 
+	 * even if a page is not typeof HTMLFormElement or
 	 * HTMLFieldsetElement
-	 * 
+	 *
 	 * @return {void}
 	 */
 	private applyFormElementClasses(): void {
@@ -128,7 +128,7 @@ export default class WizerdForm {
 	 * Remove `wizerdform-element` class added by the
 	 * `applyFormElementClasses` method. This Method is usually called
 	 * from `destroy`
-	 * 
+	 *
 	 * @return {void}
 	 */
 	private removeFormElementClasses(): void {
@@ -140,7 +140,7 @@ export default class WizerdForm {
 	/**
 	 * Create new instances of `WizerdFormPage` from any
 	 * Element provided by `options.pages` on init
-	 * 
+	 *
 	 * @return {void}
 	 */
 	private setInitialPages(): void {
@@ -153,9 +153,9 @@ export default class WizerdForm {
 
 	/**
 	 * Get instance of a `WizerdFormPage` by index
-	 * 
-	 * @param index 
-	 * 
+	 *
+	 * @param index
+	 *
 	 * @return {false|WizerdFormPage} returns false if there is no page with the given index
 	 */
 	getPageByIndex(index: number): false | WizerdFormPage {
@@ -176,7 +176,7 @@ export default class WizerdForm {
 	/**
 	 * Get instance `WizerdFormPage` by the current
 	 * index
-	 * 
+	 *
 	 * @return {WizerdFormPage}
 	 */
 	getCurrentPage(): WizerdFormPage {
@@ -186,9 +186,9 @@ export default class WizerdForm {
 	/**
 	 * Jump directly to another page by it's index.
 	 * Will return false if pageIndex is less than zero
-	 * 
-	 * @param {number} pageIndex 
-	 * 
+	 *
+	 * @param {number} pageIndex
+	 *
 	 * @return {void|false}
 	 */
 	goToPage(pageIndex = 0): void | false {
@@ -205,17 +205,17 @@ export default class WizerdForm {
 
 	/**
 	 * Navigate the form by a given value of pages.
-	 * Using a negative number in the first parameter will result in 
+	 * Using a negative number in the first parameter will result in
 	 * navigating to previous pages
-	 * 
+	 *
 	 * @param {number} value amount of pages to move. Use negative numbers to move to previous pages.
 	 * @param {boolean|undefined} noValidate
-	 * 
+	 *
 	 * @return {void|false} returns false on the last page
 	 */
 	navigate(value: number = 0, noValidate: boolean | undefined = false): void | false {
 		if (
-			(value === 1 && (!noValidate && !this.getCurrentPage().validate().valid)) || 
+			(value === 1 && (!noValidate && !this.getCurrentPage().validate().valid)) ||
 			(value === -1 && this.index === 0)
 		) {
 			return false;
@@ -248,10 +248,10 @@ export default class WizerdForm {
 	 * Add a new `WizerdFromPage` by string.
 	 * This method can be used to create pages from AJAX Calls or other
 	 * callbacks.
-	 * 
-	 * @param newPage 
-	 * @param index 
-	 * 
+	 *
+	 * @param newPage
+	 * @param index
+	 *
 	 * @return {void|WizerdFormPage}
 	 */
 	addPage(newPage: Function | string, index: number = -1): void | WizerdFormPage {
@@ -294,12 +294,12 @@ export default class WizerdForm {
 
 	/**
 	 * Dynamically create accessible Form controls
-	 * 
-	 * @param key 
-	 * @param tagName 
-	 * @param props 
-	 * @param inner 
-	 * @param update 
+	 *
+	 * @param key
+	 * @param tagName
+	 * @param props
+	 * @param inner
+	 * @param update
 	 */
 	addFormControl(key: string, tagName: string, props: Object = {}, inner: null | string | Object = null, update: boolean = true): WizerdFormControl {
 		const ctr: WizerdFormControl = new WizerdFormControl(key, tagName, props, inner);
@@ -375,21 +375,21 @@ export default class WizerdForm {
 
 	/**
 	 * Custom Event Handlers
-	 * 
+	 *
 	 * available callbacks:
-	 * 
+	 *
 	 * input:
 	 * change:
 	 * fires whenever an input changes
-	 * 
-	 * error: 
+	 *
+	 * error:
 	 * fires when validation fails
-	 * 
-	 * navigate: 
+	 *
+	 * navigate:
 	 * fires on navigation
-	 * 
-	 * @param {string} on 
-	 * @param {CallableFunction} fn 
+	 *
+	 * @param {string} on
+	 * @param {CallableFunction} fn
 	 */
 	on(on: string, fn: Function): void {
 
@@ -423,14 +423,14 @@ export default class WizerdForm {
 
 				const curVal = el.value;
 				fn.bind(
-					el, 
-					evt, 
+					el,
+					evt,
 					{
 						wizerdForm: this,
 						el: el,
 						value: curVal,
-					} 
-				)(); 
+					}
+				)();
 			});
 		});
 	}
@@ -438,8 +438,8 @@ export default class WizerdForm {
 	private evtHandleValidationError(fn: Function): void {
 		Array.prototype.forEach.call(this.getCurrentPage().getElements(), ( formField ) => {
 			formField.addEventListener('wizerdForm_validationFailed', (evt) => {
-				fn.bind( 
-					formField, 
+				fn.bind(
+					formField,
 					evt,
 					{
 						wizerdForm: this,
@@ -453,8 +453,8 @@ export default class WizerdForm {
 	private evtHandleNavigation(fn: Function): void {
 		this.form.addEventListener('wizerdForm_navigate', (evt) => {
 			const curIndex = this.index;
-			fn.bind( 
-				this, 
+			fn.bind(
+				this,
 				evt,
 				{
 					wizerdForm: this,

@@ -27,10 +27,10 @@ export default class {
 
 	/**
 	 * Wrapper function around addEventlistener
-	 * 
-	 * @param type 
-	 * @param listener 
-	 * @param options 
+	 *
+	 * @param type
+	 * @param listener
+	 * @param options
 	 */
 	addEventListener(type: string, listener: EventListener, options: EventListenerOptions | false = false): void {
 		document.addEventListener(
@@ -42,7 +42,7 @@ export default class {
 				if ( element === undefined || target === null || ! element.contains(target as Node) ) {
 					return;
 				}
-				listener(evt);				
+				listener(evt);
 			},
 			options
 		);

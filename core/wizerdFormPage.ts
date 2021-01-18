@@ -46,7 +46,7 @@ export default class {
 
 	/**
 	 * Get Values of current Page
-	 * 
+	 *
 	 * @return Object
 	 */
 	getValues(): Object {
@@ -64,10 +64,10 @@ export default class {
 
 	/**
 	 * Primitive Validation
-	 * 
+	 *
 	 * For browsers above IE9 use the HTMLInputElement's API checkValidity function
 	 * prior use a custom validation that is similar to the browsers default.
-	 * 
+	 *
 	 * @return {boolean} validation status
 	 */
 	validate() {
@@ -83,7 +83,7 @@ export default class {
 		Array.prototype.forEach.call( elements, ( field ) => {
 			fieldValidated = field;
 			valid = validateInput(field);
-		} ); 
+		} );
 
 		if (valid !== true && fieldValidated) {
 			fieldValidated.classList.add('has-error');

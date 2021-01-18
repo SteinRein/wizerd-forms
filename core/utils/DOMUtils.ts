@@ -22,7 +22,7 @@ export function createElement(tagName: string, props: Object = {}, children: Arr
 		tagName,
 		props,
 		children
-	};	
+	};
 }
 
 export function renderElement(node: wizerdFormCreateElement): Node {
@@ -82,12 +82,12 @@ export function mountChildElements(node: Node, target): Node {
 //Returns true if it is a DOM node
 export function isNode(o){
 	return (
-		typeof Node === "object" ? o instanceof Node : 
+		typeof Node === "object" ? o instanceof Node :
 		o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
 	);
 }
 
-//Returns true if it is a DOM element    
+//Returns true if it is a DOM element
 export function isElement(o){
 	return (
 		typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2

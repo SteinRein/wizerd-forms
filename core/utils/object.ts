@@ -1,6 +1,6 @@
 export const ObjValues = (obj: Object): Array<any> => {
-	return (!Object.values) ? 
-						Object.keys(obj).map(e => obj[e]) : 
+	return (!Object.values) ?
+						Object.keys(obj).map(e => obj[e]) :
 						Object.values(obj);
 }
 
