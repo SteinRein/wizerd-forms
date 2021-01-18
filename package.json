@@ -2,7 +2,7 @@
   "name": "@steinrein/wizerd-forms",
   "version": "1.0.2",
   "description": "Library for creating flexible multistep forms.",
-	"main": "dist/umd/index.js",
+	"main": "dist/wizerdform.bundle.js",
 	"types": "dist/umd/index.d.ts",
   "directories": {
     "example": "example"

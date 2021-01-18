@@ -1,5 +1,9 @@
+**1.0.2.1**
+- Bugfixes:
+  - package.json `main` field was set wrong
+
 **1.0.2**
-- Bugs:
+- Bugfixes:
   - createElement function would render attributes like `className` as it is under some circumstances
   - `getValues()` method was not working on the types `checkbox`, `radio`, and `select-multiple`
 - Enhancements:
@@ -8,7 +12,7 @@
   - `getValues()` is now available on single pages and the whole form 
 
 **1.0.1**
-- Bugs: 
+- Bugfixes: 
   - Fixed an error where importing the library from node_modules was not possible
 - Enhancements: 
   - Added amd, umd, esm and cjs versions
