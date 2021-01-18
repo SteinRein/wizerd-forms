@@ -45,67 +45,89 @@ fieldset.wizerdform-page > legend{
 </head>
 <body>
 
-	<form class="wizerdform" method="POST" action="example.html">
+	<form id="form" method="POST" action="example.html">
 
 		<fieldset class="wizerdform-page">
-			<label for="input_1">this field is required</label>
-			<input type="text" name="input_1" value="" required />
-			<input type="text" name="input_1_1" value="" required />
+			<h1>1. Page</h1>
+			<label for="input_1">test</label>
+			<input type="text" name="input_1" value="" />
 		</fieldset>
 
 		<fieldset class="wizerdform-page">
-			<label for="input_2">write test to continue</label>
-			<input type="text" name="input_2" required pattern="test" value="" />
-		</fieldset>
-
-		<fieldset class="wizerdform-page">
-			<label for="input_3">YAIE (yet another input element)</label>
-			<input type="text" name="input_3" value="" />
+			<h1>2. Page</h1>
+			<label for="input_2">test</label>
+			<input type="text" name="input_2" value="" />
 		</fieldset>
 
 	</form>
 	
+	
 	<script src="../dist/wizerdform.bundle.js"></script>
 	<script>
-		const myWizerdForm = document.querySelector('.wizerdform');
-		const wizerdForm = new WizerdForm( myWizerdForm, {
-			submit_text: 'Submit!!!'
-		} );
+		const myWizerdForm = document.getElementById('form');
+
+		const wizerdForm = new WizerdForm(myWizerdForm, {});
 		wizerdForm.init();
 
-		const newFieldset = document.createElement('fieldset');
-		const newField = document.createElement('input');
-		newField.name = 'testfield';
-		newField.value = '';
-		newFieldset.appendChild(newField);
+		wizerdForm.addPage(`
+			<fieldset class="iamanewpage">
+				<label>test</label>
+				<input type="checkbox" name="checkme" value="" required />
+			</fieldset>
+		`, -1);
 
-		wizerdForm.insertPage( newFieldset, 0 );
+		const prevButton = wizerdForm.addFormControl(
+			'ctrPrev',
+			'button',
+			{
+				id: 'some-id',
+				type: 'button',
+				className: 'my-class'
+			},
+			'prev'
+		);
 
-		wizerdForm.on('input', (event, data) => {
-			console.log(data);
+		
+		prevButton.addEventListener('click', () => {
+			wizerdForm.navigate(-1);
 		});
 
-		wizerdForm.on('error', (event, data) => {
-			console.log(data);
-			console.log(event);
-			data.el.reportValidity();
+		const someotherctr = wizerdForm.addFormControl(
+			'ctrNext',
+			'button',
+			{
+				type: "button",
+				onClick: (e) => {console.log('new index ' + wizerdForm.index)}
+			},
+			'next'
+		)
+		someotherctr.addEventListener('click', () => {
+			wizerdForm.navigate(1);
 		});
 
-		wizerdForm.on('navigate', (event, data) => {
-			const messages = myWizerdForm.parentElement.querySelectorAll('.msg');
-			messages.forEach( (msg) => {
-				msg.parentElement.removeChild(msg);
-			} );
-			console.log(data);
+		const progressBar = wizerdForm.addFormControl(
+			'ctrProgress',
+			'div',
+			{
+				className: 'wizerdform-progress'
+			},
+			[
+				{
+					tagName: 'div',
+					props: {
+						className: 'test',
+						onClick: (e) => {wizerdForm.removeControl('ctrNext')}
+					},
+					children: () => 'Page ' + (wizerdForm.index + 1) + ' of ' + wizerdForm.pages.length
+				}
+			]
+		)
+
+		wizerdForm.on('submit', () => {
+			console.log('form was submitted');
 		});
 
-		myWizerdForm.addEventListener('submit', (e) => {
-			e.preventDefault();
-			const submitMsg = document.createElement('div');
-			submitMsg.className = 'msg success';
-			submitMsg.innerHTML = 'Successfully submitted';
-			myWizerdForm.insertBefore( submitMsg, myWizerdForm.firstChild );
-		});
+		console.log(wizerdForm);
 
 	</script>
 </body>

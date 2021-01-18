@@ -1,6 +1,6 @@
 {
   "name": "@steinrein/wizerd-forms",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "<img src=\"https://raw.githubusercontent.com/SteinRein/wizerd-forms/master/assets/wizerd-forms-logo.svg?token=AJ5TB5PBQSF4BGJICE7KJYS7VZYBC\" width=\"300\">",
   "main": "core/wizerdForm.js",
   "directories": {
@@ -28,8 +28,11 @@
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.12.7",
     "babel-loader": "^8.2.2",
     "glob-all": "^3.2.1",
+    "ts-loader": "^8.0.14",
+    "typescript": "^4.1.3",
     "webpack": "^5.11.1",
     "webpack-cli": "^4.3.1",
     "webpack-dev-server": "^3.11.1"

@@ -8,7 +8,7 @@ module.exports = [
 	{
 		mode: 'production',
 		entry: {
-			wizerdform: './core/index.js',
+			wizerdform: './core/index.ts',
 		},
 		optimization: {
 			minimize: true,
@@ -28,11 +28,15 @@ module.exports = [
 			filename: '[name].bundle.js',
 			library: 'WizerdForm',
 			libraryTarget: 'var',
+			libraryExport: 'default',
+		},
+		resolve: {
+			extensions: ['.ts', '.js', '.json']
 		},
 		module: {
 			rules: [
 				{
-					test: /\.(jsx?)$/,
+					test: /\.((j|t)sx?)$/,
 					exclude: /node_modules/,
 					use: ['babel-loader']
 				},

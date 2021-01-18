@@ -5,10 +5,11 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/steinrein/wizerd-forms/badge)](https://www.codefactor.io/repository/github/steinrein/wizerd-forms)
 
 # wɪzə(r)d Forms
-wɪzə(r)d is the Phonetic transcription of wizard. 
-Why? Because it does exactly what the name tells you!
+Bored of these old fashioned HTML Forms that put all the elements on the same page?
 
-wɪzə(r)d Forms is intended to work as a library to build multistep forms with ease.
+Good you're here!
+
+wɪzə(r)d Forms will help you building your own multistep Forms with full control over everything. Custom Controls? No Problem. Append new pages by AJAX Calls? You can achive this in just a few lines of code.
 
 ## Getting started
 
@@ -30,9 +31,16 @@ Include the script in your code:
 const element = document.querySelector('.wizerdform');
 const options = {};
 
-const wizerdForm = new WizerdForm( element, options );
-wizerdForm.init();
+const $WizerdForm = new WizerdForm( element, options );
+$WizerdForm.init();
 ```
+
+	startIndex: number,
+	pages: string,
+	controlsPosition: 'bottom' | 'top',
+	
+	hiddenPageClass: string,
+	activePageClass: string,
 
 ### Options
 <dl>
@@ -52,6 +60,16 @@ wizerdForm.init();
 			QuerySelector for wɪzə(r)d Form pages.
     </p>
   </dd>
+	<dt>controlsWrapper</dt>
+	<dd>
+		Type: <code>boolean | HTMLElement | DocumentFragment</code>
+		Default: <code>true</code>
+		<p>
+			Using true wɪzə(r)d Forms will add a custom wrapper predefined by the library<br>
+			false will add the controls directly to the form, HTMLElement and DocumentFragment<br>
+			help you define your own wrapper
+		</p>
+	</dd>
   <dt>controls_position</dt>
   <dd>
     Type: <code>string</code><br>
@@ -61,7 +79,7 @@ wizerdForm.init();
       ACceptable values are <code>'top'</code> and <code>'bottom'</code>.
     </p>
   </dd>
-  <dt>page_hidden_class</dt>
+  <dt>hiddenPageClass</dt>
   <dd>
     Type: <code>string</code><br>
     Default: <code>'wizerdform-hidden-page'</code>
@@ -69,7 +87,7 @@ wizerdForm.init();
       Classname for hidden wɪzə(r)d Form pages.
     </p>
   </dd>
-  <dt>page_active_class</dt>
+  <dt>activePageClass</dt>
   <dd>
     Type: <code>string</code><br>
     Default: <code>'wizerdform-active-page'</code>
@@ -77,118 +95,8 @@ wizerdForm.init();
       Classname for active wɪzə(r)d Form page.
     </p>
   </dd>
-  <dt>progressbar_class</dt>
-  <dd>
-    Type: <code>string</code><br>
-    Default: <code>'wizerdform-progress'</code>
-    <p>
-      Classname for the progress bar.
-    </p>
-  </dd>
-	<dt>prev_btn_text</dt>
-  <dd>
-    Type: <code>string</code><br>
-    Default: <code>'Previous'</code>
-    <p>
-      Text on the previous page button.
-    </p>
-  </dd>
-	<dt>next_btn_text</dt>
-  <dd>
-    Type: <code>string</code><br>
-    Default: <code>'Next'</code>
-    <p>
-      Text on the next page button.
-    </p>
-  </dd>
-	<dt>submit_text</dt>
-  <dd>
-    Type: <code>string|null</code><br>
-    Default: <code>null</code>
-    <p>
-      When the last page is reached the button text might change if <code>submit_text</code> has any value.
-    </p>
-  </dd>
 </dl>
 
 ### Methods
 
-#### `init`
-Initialize the current wɪzə(r)d Form Instance.
-This Method will add navigation controls, move the form to it's startIndex and add all Event listeners.
-
-```javascript
-wizerdForm.init();
-```
-
-#### `destroy`
-Destroy the current wɪzə(r)d Form Instance.
-This Method will remove navigation controls, set the active pageIndex to 0 and remove all Event listeners.
-```javascript
-wizerdForm.destroy();
-```
-
-#### `goToPage`
-Manually change the current page index
-
-Arguments:
-1. index - the new page Index
-
-```javascript
-const pageIndex = 2;
-wizerdForm.goToPage(pageIndex);
-```
-
-#### `insertPage`
-You can insert additional pages using the `insertPage` method to your wɪzə(r)d Form after initialization.
-
-Arguments:
-1. page - a string, DOM Element or a callback function that returns the page
-2. index - the page Index where the new page should appear at
-
-**using a string:**
-```javascript
-// Add Page by string
-const newPageByString = `<fieldset>
-	<input type="text" name="byString" value="" />
-</fieldset>`;
-wizerdForm.insertPage( newPageByString, 0 );
-```
-
-**using a DOM Element:**
-```javascript
-// Add Page by DOM Element
-const newPageByDOMNode = document.createElement('fieldset');
-const newPageFieldByDOMNode = document.createElement('input');
-newPageFieldByDOMNode.name = 'byDOMNode';
-newPageFieldByDOMNode.value = '';
-newPageByDOMNode.appendChild(newPageFieldByDOMNode);
-wizerdForm.insertPage( newPageByDOMNode, 0 );
-```
-
-**using a Callback Function:**
-```javascript
-// Add Page by Callback
-// The Callback must return either a string or a DOM Element
-const newPageByCallback = () => {
-	const page = `<fieldset>
-		<input type="text" name="byString" value="" />
-	</fieldset>`;
-	return page;
-};
-wizerdForm.insertPage( newPageByCallback, 0 );
-```
-
-#### `setValues`
-Set form values. setValues will check all formfields and save their values to it's instance values variable.
-Use the additionalValues parameter to add your own form values.
-
-Parameters:
-1. additionalValues - custom values to add
-
-```javascript
-const additionalValues = {
-	key: 'value'
-};
-wizerdForm.setValues(additionalValues);
-```
+**TBC**
