@@ -45,7 +45,7 @@ export default class WizerdForm {
 	constructor(form: HTMLFormElement, options: WizerdFormOptions) {
 
 		// Setup wɪzə(r)d Form options
-    const defaults = {
+    const defaults: WizerdFormOptions = {
 			startIndex: 0,
 			pages: '.wizerdform-page',
 			// Controls
@@ -56,7 +56,7 @@ export default class WizerdForm {
 			activePageClass: 'wizerdform-active-page',
 		};
 
-		options = options || {};
+		options = options || defaults;
 		for (var opt in defaults) {
 			if (defaults.hasOwnProperty(opt) && ! options.hasOwnProperty(opt)) {
 				options[opt] = defaults[opt];
@@ -144,7 +144,10 @@ export default class WizerdForm {
 	 * @return {void}
 	 */
 	private setInitialPages(): void {
-		const pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? [...this.options.pages] : [...this.form.querySelectorAll(this.options.pages)];
+		const pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ? 
+										Array.prototype.slice.call(this.options.pages as unknown as NodeList | HTMLCollection) : 
+										Array.prototype.slice.call(this.form.querySelectorAll(this.options.pages));
+										
 		pages.forEach((page, index) => {
 			const p = new WizerdFormPage(page, index, this.options);
 			this.pages.push(p);

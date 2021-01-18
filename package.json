@@ -1,8 +1,9 @@
 {
   "name": "@steinrein/wizerd-forms",
-  "version": "1.0.0",
-  "description": "",
-  "main": "core/wizerdForm.js",
+  "version": "1.0.1",
+  "description": "Library for creating flexible multistep forms.",
+	"main": "dist/wizerdForm.js",
+	"module": "core/wizerdForm.js",
   "directories": {
     "example": "example"
   },
@@ -14,9 +15,9 @@
     "url": "git+https://github.com/SteinRein/wizerd-forms.git"
   },
   "keywords": [
-    "wizard",
-    "multistep",
-    "form"
+    "wizard form",
+    "multistep form",
+    "form libary"
   ],
   "author": "Bastian Fießinger @SteinRein",
   "license": "ISC",

@@ -1,26 +1,15 @@
 {
-	"compilerOptions": {
-		"target": "esnext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"allowJs": true,
-		//"noEmit": true,
-		"noImplicitAny": false,
-		"strict": true,
-		"isolatedModules": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"typeRoots": [
-			"./types", 
-			"./node_modules/@types"
-		]
-	},
-	"types": [
-		"jasmine",
-		"node",
-		"dom-submitevent"
-	],
 	"include": [
-		"core"
-	]
+		"core/**/*"
+	],
+	"compilerOptions": {
+		"target": "es5",
+		"moduleResolution": "node",
+		"module": "CommonJS",
+		"lib": ["ES2015", "DOM"],
+		"outDir": "dist/cjs",
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"declaration": true
+	}
 }

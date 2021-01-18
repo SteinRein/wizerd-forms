@@ -4,7 +4,6 @@ const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
 
 module.exports = [
-	// Compile Javascript
 	{
 		mode: 'production',
 		entry: {
@@ -27,8 +26,8 @@ module.exports = [
 			path: path.resolve(__dirname, 'dist'),
 			filename: '[name].bundle.js',
 			library: 'WizerdForm',
-			libraryTarget: 'var',
-			libraryExport: 'default',
+			libraryTarget: 'umd',
+			umdNamedDefine: true,
 		},
 		resolve: {
 			extensions: ['.ts', '.js', '.json']
