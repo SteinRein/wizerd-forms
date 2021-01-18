@@ -17,7 +17,7 @@ wɪzə(r)d Forms will help you building your own multistep Forms with full contr
 ### Installation
 
 #### NPM
-`npm install` is not available yet
+`npm install @steinrein/wizerd-forms`
 
 #### Download
 [Download](https://github.com/SteinRein/wizerd-forms/archive/master.zip) the repository and include the production ready code from the <code>dist</code> folder in your project.
@@ -29,6 +29,8 @@ Include the script in your code:
 
 ## Usage
 ```javascript
+import { WizerdForm } from '@steinrein/wizerd-forms';
+
 const element = document.querySelector('.wizerdform');
 const options = {};
 
