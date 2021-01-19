@@ -8,10 +8,11 @@ export var getInputValues = function (elements) {
                     case 'checkbox':
                     case 'radio':
                         if (el.checked) {
-                            value = true;
+                            map[el.name] = (el.value === undefined || el.value === '') ? true : el.value;
                         }
                         break;
                     default:
+                        map[el.name] = el.value;
                         break;
                 }
                 break;
@@ -24,16 +25,16 @@ export var getInputValues = function (elements) {
                                 multiple.push(el.options[i].value);
                             }
                         }
-                        value = multiple;
+                        map[el.name] = multiple;
                         break;
                     default:
+                        map[el.name] = el.value;
                         break;
                 }
                 break;
             default:
                 break;
         }
-        map[el.name] = (value === null) ? el.value : value;
     });
     return map;
 };

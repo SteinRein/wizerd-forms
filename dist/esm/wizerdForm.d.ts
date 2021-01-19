@@ -118,6 +118,19 @@ export default class WizerdForm {
      */
     navigate(value?: number, noValidate?: boolean | undefined): void | false;
     /**
+     * Verify a given pageIndex
+     * If index is below zero or bigger than the amount of pages
+     * the new index will point to the amount of pages
+     *
+     * @param index
+     */
+    private verifyNewPageIndex;
+    /**
+     *
+     * @param index
+     */
+    private prepareAddPage;
+    /**
      * Add a new `WizerdFromPage` by string.
      * This method can be used to create pages from AJAX Calls or other
      * callbacks.
@@ -127,7 +140,8 @@ export default class WizerdForm {
      *
      * @return {void|WizerdFormPage}
      */
-    addPage(newPage: Function | string, index?: number): void | WizerdFormPage;
+    addPage(newPage: Function | string, index?: number): void;
+    replacePage(index: number, newPage: Function | string): void;
     /**
      * Dynamically create accessible Form controls
      *
@@ -139,9 +153,9 @@ export default class WizerdForm {
      */
     addFormControl(key: string, tagName: string, props?: Object, inner?: null | string | Object, update?: boolean): WizerdFormControl;
     createElement(tagName: string, props?: Object, children?: Array<Object>): wizerdFormCreateElement;
-    setControlsWrapper(): HTMLElement;
+    private setControlsWrapper;
     updateControls(): void;
-    removeControls(): void;
+    private removeControls;
     removeControl(key: string): void;
     /**
      * Custom Event Handlers
@@ -157,6 +171,9 @@ export default class WizerdForm {
      *
      * navigate:
      * fires on navigation
+     *
+     * submit:
+     * fires on form submit
      *
      * @param {string} on
      * @param {CallableFunction} fn

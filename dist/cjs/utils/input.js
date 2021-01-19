@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getInputValues = function (elements) {
+exports.getInputValues = void 0;
+var getInputValues = function (elements) {
     var map = {};
     Array.prototype.forEach.call(elements, function (el) {
         var value = null;
@@ -10,10 +11,11 @@ exports.getInputValues = function (elements) {
                     case 'checkbox':
                     case 'radio':
                         if (el.checked) {
-                            value = true;
+                            map[el.name] = (el.value === undefined || el.value === '') ? true : el.value;
                         }
                         break;
                     default:
+                        map[el.name] = el.value;
                         break;
                 }
                 break;
@@ -26,19 +28,20 @@ exports.getInputValues = function (elements) {
                                 multiple.push(el.options[i].value);
                             }
                         }
-                        value = multiple;
+                        map[el.name] = multiple;
                         break;
                     default:
+                        map[el.name] = el.value;
                         break;
                 }
                 break;
             default:
                 break;
         }
-        map[el.name] = (value === null) ? el.value : value;
     });
     return map;
 };
+exports.getInputValues = getInputValues;
 exports.default = {
     getInputValues: exports.getInputValues,
 };

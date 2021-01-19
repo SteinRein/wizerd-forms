@@ -90,6 +90,12 @@ fieldset.wizerdform-page > legend{
 			<input type="text" name="input_2" value="" />
 		</fieldset>
 
+		<fieldset class="wizerdform-page">
+			<h1>3. Page</h1>
+			<label for="input_2">test</label>
+			<input type="text" name="input_3" value="" />
+		</fieldset>
+
 	</form>
 	
 	
@@ -101,10 +107,12 @@ fieldset.wizerdform-page > legend{
 		wizerdForm.init();
 
 		wizerdForm.addPage(`
-			<fieldset class="iamanewpage">
-				<label>test</label>
-				<input type="checkbox" name="checkme" value="" required />
-			</fieldset>
+			<label>test</label>
+			<input type="checkbox" name="checkme" value="" required />
+		`, 1);
+		wizerdForm.addPage(`
+			<label>test 2</label>
+			<input type="checkbox" name="checkme" value="" required />
 		`, -1);
 
 		const prevButton = wizerdForm.addFormControl(
@@ -120,7 +128,7 @@ fieldset.wizerdform-page > legend{
 
 		
 		prevButton.addEventListener('click', () => {
-			wizerdForm.navigate(-1);
+			wizerdForm.navigate(-1, true);
 		});
 
 		const someotherctr = wizerdForm.addFormControl(
@@ -133,7 +141,7 @@ fieldset.wizerdform-page > legend{
 			'next'
 		)
 		someotherctr.addEventListener('click', () => {
-			wizerdForm.navigate(1);
+			wizerdForm.navigate(1, true);
 		});
 
 		const progressBar = wizerdForm.addFormControl(

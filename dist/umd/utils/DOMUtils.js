@@ -9,6 +9,7 @@
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.isElement = exports.isNode = exports.mountChildElements = exports.mountElements = exports.renderNode = exports.renderElement = exports.createElement = void 0;
     /**
      * Internal Dependencies
      */

@@ -232,6 +232,34 @@ var WizerdForm = /** @class */ (function () {
         this.updateControls();
     };
     /**
+     * Verify a given pageIndex
+     * If index is below zero or bigger than the amount of pages
+     * the new index will point to the amount of pages
+     *
+     * @param index
+     */
+    WizerdForm.prototype.verifyNewPageIndex = function (index) {
+        if (index < 0 || index > this.pages.length) {
+            index = this.pages.length;
+        }
+        return index;
+    };
+    /**
+     *
+     * @param index
+     */
+    WizerdForm.prototype.prepareAddPage = function (index) {
+        if (index === void 0) { index = -1; }
+        var tempPage = document.createElement('fieldset');
+        index = this.verifyNewPageIndex(index);
+        var page = new wizerdFormPage_1.default(tempPage, index, this.options);
+        this.pages.splice(index, 0, page);
+        for (var i = index + 1; i < this.pages.length; i++) {
+            this.pages[i].index = i;
+        }
+        return tempPage;
+    };
+    /**
      * Add a new `WizerdFromPage` by string.
      * This method can be used to create pages from AJAX Calls or other
      * callbacks.
@@ -249,30 +277,31 @@ var WizerdForm = /** @class */ (function () {
         if (!micro_dash_1.isString(newPage) || newPage === '') {
             return;
         }
-        var tempPage = document.createElement('fieldset');
-        tempPage.innerHTML = newPage;
-        var pageNode;
-        if (tempPage.children.length > 1) {
-            pageNode = tempPage;
-        }
-        else {
-            pageNode = tempPage.children[0];
-        }
-        if (index < 0 || index > this.pages.length) {
-            index = this.pages.length;
-        }
-        var reference = this.pages[index];
+        var tempPage = this.prepareAddPage(index);
+        var reference = this.pages[index + 1];
         if (typeof reference !== 'undefined') {
-            this.form.insertBefore(pageNode, reference.page);
+            this.form.insertBefore(tempPage, reference.page);
         }
         else {
-            this.form.insertBefore(pageNode, this.pages[index - 1].page.nextSibling);
+            this.form.insertBefore(tempPage, this.pages[index - 1].page.nextSibling);
         }
-        var page = new wizerdFormPage_1.default(pageNode, index, this.options);
-        this.pages.push(page);
+        this.replacePage(index, newPage);
         this.applyFormElementClasses();
         this.goToPage(this.index);
-        return page;
+    };
+    WizerdForm.prototype.replacePage = function (index, newPage) {
+        if (index === undefined || newPage === undefined) {
+            return;
+        }
+        if (typeof newPage === 'function') {
+            newPage = newPage();
+        }
+        if (!micro_dash_1.isString(newPage) || newPage === '') {
+            return;
+        }
+        index = Math.min(this.verifyNewPageIndex(index), this.pages.length - 1);
+        var toReplace = this.pages[index].page;
+        toReplace.innerHTML = newPage;
     };
     /**
      * Dynamically create accessible Form controls
@@ -365,6 +394,9 @@ var WizerdForm = /** @class */ (function () {
      *
      * navigate:
      * fires on navigation
+     *
+     * submit:
+     * fires on form submit
      *
      * @param {string} on
      * @param {CallableFunction} fn

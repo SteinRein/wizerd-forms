@@ -1,6 +1,7 @@
 define(["require", "exports", "./array", "./object", "@s-libs/micro-dash"], function (require, exports, array_1, object_1, micro_dash_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.isElement = exports.isNode = exports.mountChildElements = exports.mountElements = exports.renderNode = exports.renderElement = exports.createElement = void 0;
     /**
      * create Form Element
      */
