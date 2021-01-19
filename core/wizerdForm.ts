@@ -275,8 +275,8 @@ export default class WizerdForm {
 	 * Verify a given pageIndex
 	 * If index is below zero or bigger than the amount of pages
 	 * the new index will point to the amount of pages
-	 * 
-	 * @param index 
+	 *
+	 * @param index
 	 */
 	private verifyNewPageIndex(index: number): number {
 		if ( index < 0 || index > this.pages.length ) {
@@ -286,8 +286,8 @@ export default class WizerdForm {
 	}
 
 	/**
-	 * 
-	 * @param index 
+	 *
+	 * @param index
 	 */
 	private prepareAddPage(index: number = -1) {
 		const tempPage = document.createElement('fieldset');
@@ -450,7 +450,7 @@ export default class WizerdForm {
 	 *
 	 * navigate:
 	 * fires on navigation
-	 * 
+	 *
 	 * submit:
 	 * fires on form submit
 	 *
