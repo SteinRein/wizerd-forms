@@ -148,7 +148,7 @@ export default class WizerdForm {
 		const pages = ( NodeList.prototype.isPrototypeOf(this.options.pages) || HTMLCollection.prototype.isPrototypeOf(this.options.pages) ) ?
 										Array.prototype.slice.call(this.options.pages as unknown as NodeList | HTMLCollection) :
 										Array.prototype.slice.call(this.form.querySelectorAll(this.options.pages));
-		
+
 		pages.forEach((page, index) => {
 			const p = new WizerdFormPage(page, index, this.options);
 			this.pages.push(p);
@@ -272,6 +272,38 @@ export default class WizerdForm {
 	}
 
 	/**
+	 * Verify a given pageIndex
+	 * If index is below zero or bigger than the amount of pages
+	 * the new index will point to the amount of pages
+	 * 
+	 * @param index 
+	 */
+	private verifyNewPageIndex(index: number): number {
+		if ( index < 0 || index > this.pages.length ) {
+			index = this.pages.length;
+		}
+		return index;
+	}
+
+	/**
+	 * 
+	 * @param index 
+	 */
+	private prepareAddPage(index: number = -1) {
+		const tempPage = document.createElement('fieldset');
+
+		index = this.verifyNewPageIndex(index);
+
+		const page = new WizerdFormPage(tempPage, index, this.options);
+		this.pages.splice(index, 0, page);
+		for (let i = index + 1; i < this.pages.length; i++) {
+			this.pages[i].index = i;
+		}
+
+		return tempPage;
+	}
+
+	/**
 	 * Add a new `WizerdFromPage` by string.
 	 * This method can be used to create pages from AJAX Calls or other
 	 * callbacks.
@@ -281,7 +313,7 @@ export default class WizerdForm {
 	 *
 	 * @return {void|WizerdFormPage}
 	 */
-	addPage(newPage: Function | string, index: number = -1): void | WizerdFormPage {
+	addPage(newPage: Function | string, index: number = -1): void {
 		if ( typeof newPage === 'function' ) {
 			newPage = newPage();
 		}
@@ -290,33 +322,36 @@ export default class WizerdForm {
 			return;
 		}
 
-		const tempPage = document.createElement('fieldset');
-		tempPage.innerHTML = newPage;
-		let pageNode;
-		if (tempPage.children.length > 1) {
-			pageNode = tempPage;
-		} else {
-			pageNode = tempPage.children[0];
-		}
-
-		if ( index < 0 || index > this.pages.length ) {
-			index = this.pages.length;
-		}
-
-		let reference = this.pages[index];
+		const tempPage = this.prepareAddPage(index);
+		let reference = this.pages[index + 1];
 		if ( typeof reference !== 'undefined' ) {
-			this.form.insertBefore( pageNode, reference.page );
+			this.form.insertBefore( tempPage, reference.page );
 		} else {
-			this.form.insertBefore( pageNode, this.pages[index - 1].page.nextSibling);
+			this.form.insertBefore( tempPage, this.pages[index - 1].page.nextSibling);
 		}
 
-		const page = new WizerdFormPage(pageNode, index, this.options);
-		this.pages.push(page);
+		this.replacePage(index, newPage);
 
 		this.applyFormElementClasses();
 		this.goToPage(this.index);
+	}
 
-		return page;
+	replacePage(index: number, newPage: Function | string): void {
+		if ( index === undefined || newPage === undefined ) {
+			return;
+		}
+
+		if ( typeof newPage === 'function' ) {
+			newPage = newPage();
+		}
+
+		if ( !isString(newPage) || newPage === '' ) {
+			return;
+		}
+
+		index = Math.min(this.verifyNewPageIndex(index), this.pages.length - 1);
+		const toReplace = this.pages[index].page;
+		toReplace.innerHTML = newPage;
 	}
 
 	/**
@@ -341,7 +376,7 @@ export default class WizerdForm {
 		return createElement(tagName, props, children);
 	}
 
-	setControlsWrapper(): HTMLElement {
+	private setControlsWrapper(): HTMLElement {
 		let controlsWrapper;
 		// Insert new ControlsWrapper if not already given
 		if ( ! this.controlsWrapper ) {
@@ -385,7 +420,7 @@ export default class WizerdForm {
 		}
 	}
 
-	removeControls() {
+	private removeControls() {
 		ObjValues(this.controls).forEach((ctr) => {
 			this.removeControl(ctr.key);
 		});
@@ -415,6 +450,9 @@ export default class WizerdForm {
 	 *
 	 * navigate:
 	 * fires on navigation
+	 * 
+	 * submit:
+	 * fires on form submit
 	 *
 	 * @param {string} on
 	 * @param {CallableFunction} fn
