@@ -27,7 +27,7 @@ Include the script in your code:
 <script src="path/to/wizerdforms.bundle.js"></script>
 ```
 
-## Usage
+## Basic Usage
 ```javascript
 import { WizerdForm } from '@steinrein/wizerd-forms';
 
@@ -95,4 +95,179 @@ $WizerdForm.init();
 
 ### Methods
 
-**TBC**
+#### Methods from `WizerdForm`
+##### `init`
+Set an instance of a wɪzə(r)d Form.
+This Method will apply classes to all form elements, move the form to it's startIndex and set all Form controls
+```javascript
+$WizerdForm.init();
+```
+
+##### `destroy`
+Destroy an instance. The form will go back to basic.
+```javascript
+$WizerdForm.destroy();
+```
+
+##### `getElements`
+Return all Form Elements
+```javascript
+$WizerdForm.getElements();
+```
+
+##### `getValues`
+Return all Form Element values as an object with `key => value` pairs, holding the `name` and the `value` of the elements.
+```javascript
+$WizerdForm.getValues();
+```
+
+##### `getPageByIndex`
+Get a `WizerdFormPage` by it's index. Will return false if there is no page with the given index.
+```javascript
+const index = 2;
+$WizerdForm.getPageByIndex(index);
+```
+
+##### `getCurrentPage`
+Same as `getPageByIndex` but will always return the current Page.
+```javascript
+$WizerdForm.getCurrentPage(index);
+```
+
+##### `goToPage`
+Jump directly to another page by it's index. The Method will return false if pageIndex is less than zero.
+```javascript
+const jumpTo = 3;
+$WizerdForm.goToPage(jumpTo);
+```
+
+##### `navigate`
+Navigate the form by a given value of pages to travel. Using a negative number in the first parameter will result in navigating to previous pages. The second parameter can be used to proceed navigating without validating the current Page.
+```javascript
+const goToNext = _ => {
+	$WizerdForm.navigate(1);
+}
+const goToPrev = _ => {
+	$WizerdForm.navigate(-1);
+}
+// Skip validation
+const goToNextNoValidation = _ => {
+	$WizerdForm.navigate(1, true);
+}
+const goToPrevNoValidation = _ => {
+	$WizerdForm.navigate(-1, true);
+}
+```
+
+##### `addPage`
+Add a new `WizerdFromPage` by string.
+This method can be used to create pages from AJAX Calls or other callbacks.
+```javascript
+const newPageStr = `
+	<label>my new Page</label>
+	<input type="text" name="myNewField" value="" required />
+`;
+const insertOnIndex = 1;
+
+$WizerdForm.addPage(newPageStr, insertOnIndex);
+```
+
+##### `replacePage`
+Replace the content of an existing Page.
+```javascript
+const replacePageOnIndex = 2;
+const replaceWith = `
+	<label>Replacement Page</label>
+	<input type="text" name="replacedField" value="" required />
+`;
+
+$WizerdForm.replacePage(replacePageOnIndex, replaceWith);
+```
+
+##### `addFormControl`
+Using addFormControl you can create accessible form controls.
+```javascript
+const nextButton = $WizerdForm.addFormControl(
+	'ctrNext', 	// Reference
+	'button',		// TagName
+	{
+		type: "button",
+		onClick: (e) => {console.log('new index ' + wizerdForm.index)}
+	}, // Attributes
+	'next' // Children
+)
+```
+You can also create children with nodes like:
+```javascript
+const nextButton = $WizerdForm.addFormControl(
+	'ctrNext', 	// Reference
+	'div',		// TagName
+	{
+		className: 'button',
+		onClick: (e) => {console.log('new index ' + wizerdForm.index)}
+	}, // Attributes
+	[
+		{
+			tagName: 'span'
+			props: {},
+			children: [
+				'Next',
+				[
+					// ...Nest as many Child Elements as you want
+				]
+			]
+		}
+	]
+)
+```
+
+##### `removeControl`
+Using removeControl you can remove a form control that was previously added through `addFormControl` by it's reference.
+```javascript
+$WizerdForm.removeControl('ctrNext');
+```
+
+##### `on`
+Special Event Handlers can be specified through the `on` Method.
+Currently wɪzə(r)d Forms supports the following:
+- `input`, `change`: fires whenever an input changes
+- `error`: fires when validation fails
+- `navigate`: fires on navigation
+- `submit`: fires on form submit
+```javascript
+$WizerdForm.on('navigate', (evt) => {
+	console.log('Navigation event fired!');
+});
+```
+
+#### Methods from `WizerdFormPage`
+
+##### `show`
+Add `options.activePageClass` to a page.
+```javascript
+$WizerdForm.getPageByIndex(2).show();
+```
+
+##### `hide`
+Add `options.hiddenPageClass` to a page.
+```javascript
+$WizerdForm.getPageByIndex(2).hide();
+```
+
+##### `getElements`
+Return all Form Elements from a Page
+```javascript
+$WizerdForm.getCurrentPage().getElements();
+```
+
+##### `getValues`
+Return all Form Element values from a Page as an object with `key => value` pairs, holding the `name` and the `value` of the elements.
+```javascript
+$WizerdForm.getCurrentPage().getValues();
+```
+
+##### `validate`
+Validate a Page.
+```javascript
+$WizerdForm.getCurrentPage().validate();
+```
