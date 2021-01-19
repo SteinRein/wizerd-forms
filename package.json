@@ -8,7 +8,8 @@
     "example": "example"
   },
   "scripts": {
-    "build": "webpack"
+		"build": "webpack && tsc && tsc -m AMD --outDir dist/amd && tsc -m UMD --resolveJsonModule false --outDir dist/umd && tsc -m es6 --outDir dist/esm",
+		"watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
