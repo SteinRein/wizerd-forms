@@ -1,3 +1,7 @@
+### 1.0.6
+- **Bugfixes:**
+  - `replacePage()` method did not add form element classes
+
 ### 1.0.5
 - **Bugfixes:**
   - `getValues()` method was not returning only last index of radio list or checkbox list
@@ -8,7 +12,7 @@
 - **Docs:**
   - Added Method Descriptions to `README.md`
 
-### 1.0.4
+### 1.0.3
 **- Bugfixes:**
   - package.json `main` field was set wrong
 

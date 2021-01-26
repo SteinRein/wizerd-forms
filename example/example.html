@@ -168,6 +168,10 @@ fieldset.wizerdform-page > legend{
 			console.log(curPageValues, allValues);
 		});
 
+		wizerdForm.on('change', () => {
+			console.log('an input has changed');
+		});
+
 		wizerdForm.on('submit', () => {
 			console.log('form was submitted');
 		});

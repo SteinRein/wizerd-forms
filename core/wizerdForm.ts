@@ -331,8 +331,6 @@ export default class WizerdForm {
 		}
 
 		this.replacePage(index, newPage);
-
-		this.applyFormElementClasses();
 		this.goToPage(this.index);
 	}
 
@@ -352,6 +350,7 @@ export default class WizerdForm {
 		index = Math.min(this.verifyNewPageIndex(index), this.pages.length - 1);
 		const toReplace = this.pages[index].page;
 		toReplace.innerHTML = newPage;
+		this.applyFormElementClasses();
 	}
 
 	/**

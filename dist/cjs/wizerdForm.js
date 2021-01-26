@@ -286,7 +286,6 @@ var WizerdForm = /** @class */ (function () {
             this.form.insertBefore(tempPage, this.pages[index - 1].page.nextSibling);
         }
         this.replacePage(index, newPage);
-        this.applyFormElementClasses();
         this.goToPage(this.index);
     };
     WizerdForm.prototype.replacePage = function (index, newPage) {
@@ -302,6 +301,7 @@ var WizerdForm = /** @class */ (function () {
         index = Math.min(this.verifyNewPageIndex(index), this.pages.length - 1);
         var toReplace = this.pages[index].page;
         toReplace.innerHTML = newPage;
+        this.applyFormElementClasses();
     };
     /**
      * Dynamically create accessible Form controls
