@@ -2,14 +2,14 @@
   "name": "@steinrein/wizerd-forms",
   "version": "1.0.6",
   "description": "Library for creating flexible multistep forms.",
-	"main": "dist/wizerdform.bundle.js",
-	"types": "dist/umd/index.d.ts",
+  "main": "dist/wizerdform.bundle.js",
+  "types": "dist/umd/index.d.ts",
   "directories": {
     "example": "example"
   },
   "scripts": {
-		"build": "webpack && tsc && tsc -m AMD --outDir dist/amd && tsc -m UMD --resolveJsonModule false --outDir dist/umd && tsc -m es6 --outDir dist/esm",
-		"watch": "webpack --watch"
+    "build": "webpack && tsc && tsc -m AMD --outDir dist/amd && tsc -m UMD --resolveJsonModule false --outDir dist/umd && tsc -m es6 --outDir dist/esm",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
