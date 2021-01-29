@@ -4,7 +4,11 @@
 			"@babel/preset-typescript"
 		],
     [
-			"@babel/preset-env"
+			"@babel/preset-env",
+			{
+				"loose": false,
+				"bugfixes": true
+			}
     ]
   ],
   "plugins": [

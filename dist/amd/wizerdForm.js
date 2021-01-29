@@ -249,7 +249,7 @@ define(["require", "exports", "./utils/DOMUtils", "./utils/object", "./utils/inp
             return tempPage;
         };
         /**
-         * Add a new `WizerdFromPage` by string.
+         * Add a new `WizerdFormPage` by string.
          * This method can be used to create pages from AJAX Calls or other
          * callbacks.
          *

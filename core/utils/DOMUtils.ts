@@ -40,7 +40,7 @@ export function renderElement(node: wizerdFormCreateElement): Node {
 	
 	// Set Attributes
 	for (const [k, v] of ObjEntries(node.props)) {
-		if ( k.lastIndexOf('on', 0) === 0 ) { // exclude attributes that should trigger events
+		if ( k.indexOf('on', 0) === 0 ) { // exclude attributes that should trigger events
 			el.addEventListener(k.slice(2).toLowerCase(), v);
 		}	else if (el[k] !== 'undefined') {
 			el[k] = v;

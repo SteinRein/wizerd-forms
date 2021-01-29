@@ -1,3 +1,12 @@
+### 1.0.7
+- **Bugfixes:**
+  - use `indexOf` instead of `lastIndexOf` to apply `on...` events
+- **Enhancements:**
+  - Added Polyfill for `replaceWith`
+  - Added Polyfill for `replaceChildren` 
+- **Code Quality:**
+  - Fixed a typo
+
 ### 1.0.6
 - **Bugfixes:**
   - `replacePage()` method did not add form element classes
