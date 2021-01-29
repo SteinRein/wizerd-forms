@@ -5,6 +5,7 @@
 # wɪzə(r)d Forms
 
 [![CodeFactor](https://www.codefactor.io/repository/github/steinrein/wizerd-forms/badge)](https://www.codefactor.io/repository/github/steinrein/wizerd-forms)
+![npm](https://img.shields.io/npm/v/@steinrein/wizerd-forms)
 
 Bored of these old fashioned HTML Forms that put all the elements on the same page?
 
