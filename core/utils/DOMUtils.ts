@@ -77,7 +77,10 @@ export function mountElements(node: Node, target): Node {
 }
 
 export function mountChildElements(node: Node, target): Node {
-	target.replaceChildren(node);
+	while(target.lastChild) {
+		target.removeChild(target.lastChild); 
+	}
+	target.appendChild(node);
 	return node;
 }
 

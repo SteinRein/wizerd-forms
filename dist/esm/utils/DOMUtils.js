@@ -68,7 +68,10 @@ export function mountElements(node, target) {
     return node;
 }
 export function mountChildElements(node, target) {
-    target.replaceChildren(node);
+    while (target.lastChild) {
+        target.removeChild(target.lastChild);
+    }
+    target.appendChild(node);
     return node;
 }
 //Returns true if it is a DOM node

@@ -84,7 +84,10 @@
     }
     exports.mountElements = mountElements;
     function mountChildElements(node, target) {
-        target.replaceChildren(node);
+        while (target.lastChild) {
+            target.removeChild(target.lastChild);
+        }
+        target.appendChild(node);
         return node;
     }
     exports.mountChildElements = mountChildElements;
