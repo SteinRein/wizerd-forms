@@ -1,3 +1,7 @@
+### 1.0.8
+- **Enhancements:**
+  - replaced `replaceChildren` with a more cross browser viable solution
+
 ### 1.0.7
 - **Bugfixes:**
   - use `indexOf` instead of `lastIndexOf` to apply `on...` events
