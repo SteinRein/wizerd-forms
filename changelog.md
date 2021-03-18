@@ -1,3 +1,7 @@
+### 1.0.9
+- **Bugfixes:**
+  - set index on last page
+
 ### 1.0.8
 - **Enhancements:**
   - replaced `replaceChildren` with a more cross browser viable solution
