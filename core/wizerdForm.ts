@@ -263,6 +263,7 @@ export default class WizerdForm {
 				'submit'
 			);
 			this.form.dispatchEvent(eventSubmit);
+			this.index = this.pages.length - 1;
 		} else {
 			this.index += value;
 		}
